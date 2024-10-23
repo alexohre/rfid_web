@@ -1,3 +1,37 @@
+<style>
+	/* Style the custom card to look more distinct */
+	.custom-card {
+	  width: 150px;
+	  height: 100px;
+	  border-radius: 8px;
+	  cursor: pointer;
+	  transition: transform 0.2s, box-shadow 0.2s;
+	}
+
+	/* Add a green shadow and slight scale on hover */
+	.custom-card:hover {
+	  transform: scale(1.05);
+	  box-shadow: 0 4px 8px rgba(0, 128, 0, 0.2);
+	}
+
+	/* Position radio buttons neatly inside cards */
+	.form-check-input {
+	  width: 20px;
+	  height: 20px;
+	  cursor: pointer;
+	}
+
+	/* Add space between radio button and label */
+	.form-check-input + .form-check-label {
+	  margin-left: 8px;
+	}
+
+	/* When a card is selected, apply a darker green border */
+	.form-check-input:checked + .form-check-label {
+	  font-weight: bold;
+	  color: darkgreen;
+	}
+</style>
 <header class="masthead text-center text-white">
 	<div class="masthead-content">
 		<div class="container px-5">
@@ -62,3 +96,59 @@
 		</div>
 	</div>
 </section>
+<!-- Modal Structure -->
+<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="loginModalLabel">Login as</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<!-- Radio buttons for selecting between Student and Lecturer -->
+				<form>
+					<div class="d-flex justify-content-center">
+						<!-- Student Card -->
+						<div class="form-check card custom-card mx-2" style="border: 1px solid green;">
+							<div class="card-body d-flex align-items-center justify-content-center">
+								<input class="form-check-input me-2" type="radio" name="userRole" id="studentRole" value="student" checked>
+								<label class="form-check-label" for="studentRole">
+									Student
+								</label>
+							</div>
+						</div>
+						<!-- Lecturer Card -->
+						<div class="form-check card custom-card mx-2" style="border: 1px solid green;">
+							<div class="card-body d-flex align-items-center justify-content-center">
+								<input class="form-check-input me-2" type="radio" name="userRole" id="lecturerRole" value="lecturer">
+								<label class="form-check-label" for="lecturerRole">
+									Lecturer
+								</label>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<!-- Submit button for the modal -->
+				<button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="submitLogin">Proceed</button>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+	document.addEventListener("turbo:load", function () {
+		document.getElementById('submitLogin').addEventListener('click', function() {
+			// Get the selected radio button
+			const selectedRole = document.querySelector('input[name="userRole"]:checked').value;
+
+			if (selectedRole === 'student') {
+				// Redirect to student login or any other action
+				window.location.href = "<%= new_account_session_path %>?role=student";
+			} else if (selectedRole === 'lecturer') {
+				// Redirect to lecturer login or any other action
+				window.location.href = "<%= new_lecturer_session_path %>?role=lecturer";
+			}
+		});
+	});
+</script>

@@ -1,16 +1,5 @@
 Rails.application.routes.draw do
-  get 'links/redirect/:short_code', to: 'links#redirect', as: :links_redirect
-  # constraints(domain: 'bit.sh') do
-  #   get '/:short_code', to: 'urls#redirect', as: :bit_redirect
-  # end
-  
-  get '/:short_code', to: 'urls#redirect'
-  # Define the route for redirecting from url.softalx.com to shorturl.softalx.com
-  constraints(host: 'url.softalx.com') do
-    get '/', to: redirect('https://shorturl.softalx.com')  # Redirect root path
-
-    get '/:short_code', to: 'urls#redirect'  # Handle shortened URLs
-  end
+  # devise_for :lecturers
   
   namespace :account do
     resource :subscription, only: [ :update]
@@ -80,6 +69,12 @@ Rails.application.routes.draw do
     registration: 'user',
     sign_up: 'sign_up'
   }
+
+  devise_for :lecturers, controllers:{
+    sessions: 'lecturers/sessions'
+  }, path: 'lecturers', path_names: { 
+    sign_in: 'login', sign_out: 'logout', sign_up: 'register'
+  }, only: [:sessions]
 
   root 'pages#home'
 

@@ -1,0 +1,70 @@
+
+<div class="container-xxl">
+      <%= render "account/shared/notice" %>
+  <div class="authentication-wrapper authentication-basic container-p-y">
+    <div class="authentication-inner">
+      <!-- Register -->
+      <div class="card">
+        <div class="card-body">
+          <!-- Logo -->
+          <div class="app-brand justify-content-center">
+            <a href="<%= root_path %>" class=" ">
+              <%= image_tag "fun_logo.png", width: "130", alt: "logo" %>
+            </a>
+          </div>
+          <!-- /Logo -->
+          <h4 class="mb-2">Welcome Back 👋 <span class="fw-bold">{Staff Only}</span></h4>
+          <p class="mb-4">Please sign-in to your account</p>
+
+            <%= form_for(resource, as: resource_name, url: session_path(resource_name), data: {turbo: false}) do |f| %>
+
+            <div class="mb-4">
+              <label for="email" class="form-label">Email Address</label>
+              <input
+                type="text"
+                class="form-control"
+                id="account_email"
+                name="account[email]"
+                placeholder="Enter your email"
+                autofocus
+              />
+            </div>
+            <div class="mb-3 form-password-toggle">
+              
+              <div class="input-group input-group-merge">
+                <input
+                  type="password"
+                  id="account_password"
+                  class="form-control"
+                  name="account[password]"
+                  placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
+                  aria-describedby="password"
+                />
+
+                <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+              </div>
+            </div>
+
+            <% if devise_mapping.rememberable? %>
+            <div class="mb-3">
+              <div class="form-check">
+                <%= f.check_box :remember_me, class: "form-check-input", id: "remember-me" %>
+                <label class="form-check-label" for="remember-me"> Remember Me </label>
+              </div>
+            </div>
+            <% end %>
+            <div class="mb-3">
+              <button class="btn btn-primary d-grid w-100" type="submit">Sign in</button>
+            </div>
+          
+          <% end %>
+          
+
+          
+          </div>
+        </div>
+      </div>
+      <!-- /Register -->
+    </div>
+  </div>
+</div>
