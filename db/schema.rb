@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_04_05_171755) do
+ActiveRecord::Schema[7.0].define(version: 2024_03_01_021501) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -84,23 +84,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_05_171755) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
-  create_table "clicks", force: :cascade do |t|
-    t.bigint "url_id", null: false
-    t.string "source"
-    t.string "user_agent"
-    t.string "ip_address"
-    t.string "city"
-    t.string "country"
-    t.string "browser"
-    t.string "device"
-    t.string "os"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "region"
-    t.string "timezone"
-    t.index ["url_id"], name: "index_clicks_on_url_id"
-  end
-
   create_table "emailers", force: :cascade do |t|
     t.string "email"
     t.string "subject"
@@ -115,19 +98,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_05_171755) do
     t.text "contact_address"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "urls", force: :cascade do |t|
-    t.string "title"
-    t.string "long_url"
-    t.string "short_url"
-    t.string "short_code"
-    t.integer "click_count", default: 0
-    t.bigint "account_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "show_url"
-    t.index ["account_id"], name: "index_urls_on_account_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -147,6 +117,4 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_05_171755) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "clicks", "urls"
-  add_foreign_key "urls", "accounts"
 end

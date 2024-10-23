@@ -23,7 +23,7 @@ default: &default
 
 development:
   <<: *default
-  database: url_shortner_development
+  database: rfid_web_development
 
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.
@@ -57,7 +57,7 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: url_shortner_test
+  database: rfid_web_test
 
 # As with config/credentials.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
@@ -81,6 +81,6 @@ test:
 #
 production:
   <<: *default
-  database: url_shortner_production
-  username: url_shortner
-  password: <%= ENV["URL_SHORTNER_DATABASE_PASSWORD"] %>
+  database: rfid_web_production
+  username: rfid_web
+  password: <%= ENV["RFID_WEB_DATABASE_PASSWORD"] %>

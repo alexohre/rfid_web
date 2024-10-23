@@ -1,5 +1,64 @@
-<h1>Pages#home</h1>
-<p>Find me in app/views/pages/home.html.erb</p>
-<%= link_to "sign in", new_account_session_path %>
-<br>
-<%= link_to "sign up", new_account_registration_path %>
+<header class="masthead text-center text-white">
+	<div class="masthead-content">
+		<div class="container px-5">
+			<h1 class="masthead-heading mb-0">Get Ready to be Amazed</h1>
+			<h2 class="masthead-subheading mb-0">Welcome to EEE Funaab Department!</h2>
+			<a class="btn btn-primary btn-xl rounded-pill mt-5" href="<%= new_account_registration_path %>">Get Started</a>
+		</div>
+	</div>
+	<%# <div class="bg-circle-1 bg-circle"></div>
+	<div class="bg-circle-2 bg-circle"></div>
+	<div class="bg-circle-3 bg-circle"></div>
+	<div class="bg-circle-4 bg-circle"></div> %>
+</header>
+<!-- Content section 1-->
+<section id="scroll">
+	<div class="container px-5">
+		<div class="row gx-5 align-items-center">
+			<div class="col-lg-6 order-lg-2">
+				<%# <div class="p-5"><img class="img-fluid rounded-circle" src="assets/img/01.jpg" alt="..." /></div> %>
+				<div class="p-5"> <%= image_tag("funaab.jpg", class: "img-fluid rounded-circle", alt: "image") %></div>
+			</div>
+			<div class="col-lg-6 order-lg-1">
+				<div class="p-5">
+					<h2 class="display-4">Our Facilities that rocks!</h2>
+					<p>The Electrical and Electronics Engineering (EEE) department offers a comprehensive environment that fosters both academic and personal growth. From well-equipped laboratories and advanced research tools to collaborative study areas and innovation-driven workshops, our facilities ensure students excel in a supportive, cutting-edge setting.</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- Content section 2-->
+<section>
+	<div class="container px-5">
+		<div class="row gx-5 align-items-center">
+			<div class="col-lg-6">
+				<%# <div class="p-5"><img class="img-fluid rounded-circle" src="assets/img/02.jpg" alt="..." /></div> %>
+				<div class="p-5"> <%= image_tag("logic_control.jpg", class: "img-fluid rounded-circle", alt: "image") %></div>
+			</div>
+			<div class="col-lg-6">
+				<div class="p-5">
+					<h2 class="display-4">Our Core Values</h2>
+					<p>Our core values serve as the foundation of the Electrical and Electronics Engineering (EEE) department, guiding our actions, decisions, and academic endeavors. These principles act as our moral compass, helping us navigate challenges, foster strong collaborations, and make impactful contributions to the engineering field and society at large.</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- Content section 3-->
+<section>
+	<div class="container px-5">
+		<div class="row gx-5 align-items-center">
+			<div class="col-lg-6 order-lg-2">
+				<%# <div class="p-5"><img class="img-fluid rounded-circle" src="assets/img/03.jpg" alt="..." /></div> %>
+				<div class="p-5"> <%= image_tag("senate.jpg", class: "img-fluid rounded-circle", alt: "image") %></div>
+			</div>
+			<div class="col-lg-6 order-lg-1">
+				<div class="p-5">
+					<h2 class="display-4">Our EEE Environment!</h2>
+					<p>The Electrical and Electronics Engineering (EEE) department provides a dynamic space that goes beyond classrooms, serving as a hub for innovation, collaboration, and personal growth. It’s more than just a place to study—it’s where students form lasting connections, build practical skills, and create lifelong memories in a community of aspiring engineers.</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
