@@ -1,7 +1,6 @@
 class Account::DashboardController < AccountController
   def home
     @title = "Account Dashboard"
-    @clicks_count = current_account.urls.map(&:click_count).sum
   end
 
   def subscription

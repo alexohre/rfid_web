@@ -6,9 +6,9 @@
 				<table class="sm-w-full" style="width: 600px;" cellpadding="0" cellspacing="0" role="presentation">
 					<tr>
 						<td class="sm-py-32 sm-px-24" style="mso-line-height-rule: exactly; padding: 48px; text-align: center; font-family: Montserrat, -apple-system, 'Segoe UI', sans-serif;">
-							<a href="https://www.multicoininvest.com" style="font-family: 'Montserrat', sans-serif; mso-line-height-rule: exactly;">
+							<a href="<%= root_url %>" style="font-family: 'Montserrat', sans-serif; mso-line-height-rule: exactly;">
 								<span class="app-brand-logo demo mt-3">
-									<%= image_tag "https://www.multicoininvest.com/assets/img/logo-b-92f69523f3266ef88d2ce8bb030a54aed16e236bf5d070662a5dfb6bec47805e.png", alt: "logo", width: "170", style: "max-width: 100%; vertical-align: middle; line-height: 100%; border: 0;" %>
+									<%= image_tag asset_url("fun_logo.png"), alt: "logo", width: "170", style: "max-width: 100%; vertical-align: middle; line-height: 100%; border: 0;" %>
 								</span>
 							</a>
 						</td>
@@ -19,26 +19,29 @@
 								<tr>
 									<td class="sm-px-24" style="mso-line-height-rule: exactly; border-radius: 4px; background-color: #ffffff; padding: 48px; text-align: left; font-family: Montserrat, -apple-system, 'Segoe UI', sans-serif; font-size: 16px; line-height: 24px; color: #626262;">
 										<p style="font-family: 'Montserrat', sans-serif; mso-line-height-rule: exactly; margin-bottom: 0; font-size: 20px; font-weight: 600;">Dear</p>
-										<p style="font-family: 'Montserrat', sans-serif; mso-line-height-rule: exactly; margin-top: 0; font-size: 24px; font-weight: 700; color: #ff5850;"><%=@resource.username %>!</p>
+										<p style="font-family: 'Montserrat', sans-serif; mso-line-height-rule: exactly; margin-top: 0; font-size: 24px; font-weight: 700; color: #00903d;"><%=@resource.username %>!</p>
 										<p style="font-family: 'Montserrat', sans-serif; mso-line-height-rule: exactly; margin: 0; margin-bottom: 24px;">
-											Your email address <strong><%= @resource.email %></strong> was used to register an account with UrlCutter. We are delighted to welcome you to our platform.
+											Welcome to the EEE Department of the Federal University of Agriculture, Abeokuta <b>(FUNAAB)!</b> We are excited that you've registered your student account with us.
 										</p>
-										<p style="font-family: 'Montserrat', sans-serif; mso-line-height-rule: exactly; margin: 0; margin-bottom: 24px;">Before you can access our platform, we kindly ask you to confirm your account. Please follow the link below to complete the account confirmation process:</p>
-										<a href="<%= confirmation_url(@resource, confirmation_token: @token)%>" style="font-family: 'Montserrat', sans-serif; mso-line-height-rule: exactly; margin-bottom: 24px; display: block; font-size: 16px; line-height: 100%; color: #7367f0; text-decoration: none;"><%= confirmation_url(@resource, confirmation_token: @token) %></a>
+										<p style="font-family: 'Montserrat', sans-serif; mso-line-height-rule: exactly; margin: 0; margin-bottom: 24px;">To get started, we kindly request you to confirm your account by clicking the link below:</p>
+										<a href="<%= confirmation_url(@resource, confirmation_token: @token)%>" style="font-family: 'Montserrat', sans-serif; mso-line-height-rule: exactly; margin-bottom: 24px; display: block; font-size: 16px; line-height: 100%; color: #00903d; text-decoration: none;"><%= confirmation_url(@resource, confirmation_token: @token) %></a>
 										<table cellpadding="0" cellspacing="0" role="presentation">
 											<tr>
-												<td style="mso-line-height-rule: exactly; mso-padding-alt: 16px 24px; border-radius: 4px; background-color: #7367f0; font-family: Montserrat, -apple-system, 'Segoe UI', sans-serif;">
+												<td style="mso-line-height-rule: exactly; mso-padding-alt: 16px 24px; border-radius: 4px; background-color: #00903d; font-family: Montserrat, -apple-system, 'Segoe UI', sans-serif;">
 													<a href="<%= confirmation_url(@resource, confirmation_token: @token) %>" style="font-family: 'Montserrat', sans-serif; mso-line-height-rule: exactly; display: block; padding-left: 24px; padding-right: 24px; padding-top: 16px; padding-bottom: 16px; font-size: 16px; font-weight: 600; line-height: 100%; color: #ffffff; text-decoration: none;">Confirm account &rarr;</a>
 												</td>
 											</tr>
 										</table>
 										<p style="font-family: 'Montserrat', sans-serif; mso-line-height-rule: exactly; margin: 0; margin-top: 24px; margin-bottom: 24px;">
-											<span style="font-weight: 600;">Note:</span>If you have any questions or need assistance, feel free to reach out to our support team at our live support on the official website or at <strong>support@example.com</strong>. We're here to help!
+											Please complete the confirmation process to access our platform and stay connected with important updates, resources, and announcements.
 										</p>
-										<p style="font-family: 'Montserrat', sans-serif; mso-line-height-rule: exactly; margin: 0; margin-bottom: 16px;">Thank you for choosing UrlCutter. We look forward to serving you. <br>
+										<p style="font-family: 'Montserrat', sans-serif; mso-line-height-rule: exactly; margin: 0; margin-top: 24px; margin-bottom: 24px;">
+											<span style="font-weight: 600;">Note:</span> This email was intended for <%= @resource.email %>, Kindly disregard if you recieved it wrongly
+										</p>
+										<p style="font-family: 'Montserrat', sans-serif; mso-line-height-rule: exactly; margin: 0; margin-bottom: 16px;">Thank you for joining the EEE Funaab community! We look forward to supporting you on your academic journey.<br>
 											<br>
 											Best regards,<br>
-											UrlCutter Team</p>
+											<strong>EEE Funaab Team</strong></p>
 									</td>
 								</tr>
 								<tr>
