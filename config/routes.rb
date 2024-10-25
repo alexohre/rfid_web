@@ -58,17 +58,11 @@ Rails.application.routes.draw do
 
   devise_for :users, controllers: {
     sessions: 'users/sessions',
-    registrations: 'users/registrations',
-    passwords: 'users/passwords',
+    registrations: 'users/registrations'
     }, path: 'admin', path_names: {
-    sign_in: 'login',
+    sign_in: 'a-login',
     sign_out: 'logout',
-    password: 'secret',
-    confirmation: 'verification',
-    unlock: 'unblock',
-    registration: 'user',
-    sign_up: 'sign_up'
-  }
+  }, only: [:sessions, :registrations]
 
   devise_for :lecturers, controllers:{
     sessions: 'lecturers/sessions'
