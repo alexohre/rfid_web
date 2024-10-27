@@ -34,7 +34,16 @@ Rails.application.routes.draw do
     get 'emails', to: 'email#sent'
     get 'email/new', to: 'email#new'
     post 'emails', to: 'email#create'
-        # settings
+    # school config
+    get "school_config", to: "school_config#index"
+    post 'school_config/create_faculty', to: 'school_config#create_faculty'
+    post 'school_config/create_department', to: 'school_config#create_department'
+    post 'school_config/create_courses', to: 'school_config#create_courses'
+    patch 'school_config/update_faculty/:id', to: 'school_config#update_faculty', as: 'update_faculty'
+    patch 'school_config/update_department/:id', to: 'school_config#update_department', as: 'update_department'
+    patch 'school_config/update_courses/:id', to: 'school_config#update_courses', as: 'update_courses'
+
+    # settings
     get 'settings/account', to: 'setting#account'
     get 'settings/password', to: 'setting#admin_password'
     get 'settings/site_details', to: 'setting#site_details'
@@ -60,7 +69,7 @@ Rails.application.routes.draw do
     sessions: 'users/sessions',
     registrations: 'users/registrations'
     }, path: 'admin', path_names: {
-    sign_in: 'a-login',
+    sign_in: 'ae-login',
     sign_out: 'logout',
   }, only: [:sessions, :registrations]
 
@@ -72,5 +81,4 @@ Rails.application.routes.draw do
 
   root 'pages#home'
 
-  post '/fetch_title', to: 'title_fetcher#fetch_title'
 end

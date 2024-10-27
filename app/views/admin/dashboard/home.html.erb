@@ -1,351 +1,250 @@
 <div class="container-xxl flex-grow-1 container-p-y">
-  <div class="row">
-    <div class="col-lg-8 mb-4 order-0">
-      <div class="card">
-        <div class="d-flex align-items-end row">
-          <div class="col-sm-7">
-            <div class="card-body">
-              <h5 class="card-title text-primary">Welcome Back $name! 🎉</h5>
-              <p class="mb-4">
-                Today is a brand new oppotunity to do more
-              </p>
-                <h4 class="pb-0 mb-0"><i class="menu-icon tf-icons bx bx-time"> <span id="clock" class="fw-bold"></span></i></h4>
-            </div>
-          </div>
-          <div class="col-sm-5 text-center text-sm-left">
-            <div class="card-body pb-0 px-0 px-md-4">
-              <img
-                src="../assets/img/illustrations/man-with-laptop-light.png"
-                height="140"
-                alt="View Badge User"
-                data-app-dark-img="illustrations/man-with-laptop-dark.png"
-                data-app-light-img="illustrations/man-with-laptop-light.png"
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-lg-4 col-md-4 order-1">
-      <div class="row">
-        <div class="col-lg-6 col-md-12 col-6 mb-4">
-          <div class="card">
-            <div class="card-body">
-              <div class="card-title d-flex align-items-start justify-content-between">
-                <div class="avatar flex-shrink-0">
-                  <i class='bx bx-group rounded fs-1'></i>
-                </div>
-                
-              </div>
-              <span class="fw-semibold d-block mb-1">Users</span>
-              <h3 class="card-title mb-2"><%= @total_acc %></h3>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-6 col-md-12 col-6 mb-4">
-          <div class="card">
-            <div class="card-body">
-              <div class="card-title d-flex align-items-start justify-content-between">
-                <div class="avatar flex-shrink-0">
-                  <%= image_tag "img/icons/unicons/wallet-info.png", alt: "Credit Card", class: "rounded" %>
-                </div>
-                
-              </div>
-              <span>Deposits</span>
-              <h3 class="card-title text-nowrap mb-1"><%= 0 %></h3>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- Total Revenue -->
-    <div class="col-12 col-lg-8 order-2 order-md-3 order-lg-2 mb-4">
-      <div class="card">
-        <div class="row row-bordered g-0">
-          <div class="col">
-            <h5 class="card-header m-0 me-2 pb-3">(5) Recent Deposits</h5>
-            <div class="table-responsive text-nowrap">
-              <table class="table table-striped">
-                <thead>
-                  <tr>
-                    <th>Reference</th>
-                    <th>Amount</th>
-                    <th>User</th>
-                    <th>Status</th>
-                    <th>Date</th>
-                  </tr>
-                </thead>
-                <tbody class="table-border-bottom-0">
-                  <% if @recent_deposits.present? %>
-                    <% @recent_deposits.each do |deposit| %>
-                      <tr>
-                        <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong><%= deposit.order_id %></strong></td>
-                        <td><%= number_to_currency(deposit.amount, precision: 2) %></td>
-                        <td>
-                          <% full_name = "#{deposit.account&.first_name} #{deposit.account&.last_name}" if deposit.account&.first_name.present? && deposit.account&.last_name.present? %>
-                          <%= full_name.present? ? full_name : "Awaiting names" %>
-                        </td>
-                        <td>
-                          <% if deposit.status == "Pending" %>
-                              <span class="badge bg-label-warning me-1"><%= deposit.status %></span>
-                            <% elsif deposit.status == "Approved" %>
-                              <span class="badge bg-label-success me-1"><%= deposit.status %></span>
-                            <% elsif deposit.status == "Cancelled" %>
-                            <span class="badge bg-label-danger me-1"><%= deposit.status %></span>
-                            <% end %>
-                        </td>
-                        <td>
-                          <%= deposit.created_at.strftime("	%d-%m-%Y ") %>
-                        </td>
-                      </tr>
-                    <% end %>
-                  <% else %>
-                    <tr >
-                      <td colspan="4" class="text-center fs-3 ">No Deposits Yet </td>
-                    </tr>
-                  <% end %>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="card mt-4">
-        <div class="row row-bordered g-0">
-          <div class="col">
-            <h5 class="card-header m-0 me-2 pb-3">(5) Recent Withdrawals</h5>
-            <div class="table-responsive text-nowrap">
-              <table class="table table-striped">
-                <thead>
-                  <tr>
-                    <th>Reference</th>
-                    <th>Amount</th>
-                    <th>User</th>
-                    <th>Status</th>
-                    <th>Date</th>
-                  </tr>
-                </thead>
-                <tbody class="table-border-bottom-0">
-                  <% if @recent_withdrawals.present? %>
-                    <% @recent_withdrawals.each do |withdraw| %>
-                      <tr>
-                        <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong><%= withdraw.order_id %></strong></td>
-                        <td><%= number_to_currency(withdraw.amount, precision: 2) %></td>
-                        <td>
-                          <% full_name = "#{withdraw.account.first_name} #{withdraw.account.last_name}" if withdraw.account.first_name.present? && withdraw.account.last_name.present? %>
-                          <%= full_name.present? ? full_name : "Awaiting names" %>
-                        </td>
-                        <td>
-                          <% if withdraw.status == "Pending" %>
-                              <span class="badge bg-label-warning me-1"><%= withdraw.status %></span>
-                            <% elsif withdraw.status == "Approved" %>
-                              <span class="badge bg-label-success me-1"><%= withdraw.status %></span>
-                            <% elsif withdraw.status == "Cancelled" %>
-                            <span class="badge bg-label-danger me-1"><%= withdraw.status %></span>
-                            <% end %>
-                        </td>
-                        <td>
-                          <%= withdraw.created_at.strftime("	%d-%m-%Y ") %>
-                        </td>
-                      </tr>
-                    <% end %>
-                  <% else %>
-                    <tr >
-                      <td colspan="4" class="text-center fs-3 ">No Withdrawals Yet </td>
-                    </tr>
-                  <% end %>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="card mt-4">
-        <div class="row row-bordered g-0">
-          <div class="col">
-            <h5 class="card-header m-0 me-2 pb-3">(5) Recent Trades</h5>
-            <div class="table-responsive text-nowrap">
-              <table class="table table-striped">
-                <thead>
-                  <tr>
-                    <th>Reference</th>
-                    <th>Amount</th>
-                    <th>User</th>
-                    <th>Status</th>
-                    <th>Date</th>
-                  </tr>
-                </thead>
-                <tbody class="table-border-bottom-0">
-                  <% if @recent_trades.present? %>
-                  <% @recent_trades.each do |trade| %>
-                    <tr>
-                      <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong><%= trade.order_id %></strong></td>
-                      <td><%= number_to_currency(trade.amount, precision: 2) %></td>
-                      <td>
-                        <% full_name = "#{trade.account&.first_name} #{trade.account&.last_name}" if trade.account&.first_name.present? && trade.account&.last_name.present? %>
-
-                        <%= full_name.present? ? full_name : "Awaiting names" %>
-
-                      </td>
-                      <td>
-                        <% if trade.status == "running" %>
-                          <span class="badge bg-label-warning me-1"><%= trade.status %></span>
-                        <% elsif trade.status == "completed" %>
-                          <span class="badge bg-label-success me-1"><%= trade.status %></span>
-                        <% elsif trade.status == "cancelled" %>
-                         <span class="badge bg-label-danger me-1"><%= trade.status %></span>
-                        <% end %>
-                      </td>
-                      <td>
-                        <%= trade.created_at.strftime("	%d-%m-%Y ") %>
-                      </td>
-                    </tr>
-                    
-                  <% end %>
-                  <% else %>
-                    <tr >
-                      <td colspan="4" class="text-center fs-3 ">No Trades Yet </td>
-                    </tr>
-                  <% end %>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    
-    <!--/ Total Revenue -->
-    <div class="col-12 col-md-8 col-lg-4 order-3 order-md-2">
-      <div class="row">
-        <div class="col-6 mb-4">
-          <div class="card">
-            <div class="card-body">
-              <div class="card-title d-flex align-items-start justify-content-between">
-                <div class="avatar flex-shrink-0">
-                 <%= image_tag "img/icons/unicons/wallet-info.png", alt: "Credit Card", class: "rounded" %>
-                </div>
-                
-              </div>
-              <span class="d-block mb-1">Withdrawals</span>
-              <h3 class="card-title text-nowrap mb-2"><%= @total_withdrawal %></h3>
-            </div>
-          </div>
-        </div>
-        <div class="col-6 mb-4">
-          <div class="card">
-            <div class="card-body">
-              <div class="card-title d-flex align-items-start justify-content-between">
-                <div class="avatar flex-shrink-0">
-                  <%= image_tag "img/icons/unicons/chart-success.png", alt: "chart success", class: "rounded" %>
-                </div>
-                
-              </div>
-              <span class="fw-semibold d-block mb-1">Trades</span>
-              <h3 class="card-title mb-2"><%= 0 %></h3>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-12 mb-4">
-          <div class="card">
-            <div class="card-body">
-              <div class="d-flex justify-content-between flex-sm-row flex-column gap-3">
-                <div class="d-flex flex-sm-column flex-row align-items-start justify-content-between">
-                  <div class="card-title">
-                    <h5 class="text-nowrap mb-2">Deposits Stats</h5>
-                  </div>
-                  <div class="mt-sm-auto">
-                    
-                     <p class="mb-2 d-flex  fs-16 text-black font-w500">Pending
-                      <span class="ms-auto text-dark fs-14 font-w400">0/45</span>
-                    </p>
-                    <div class="progress mb-3" style="height:18px;">
-                      <div class="progress-bar bg-primary progress-animated" style="width:0%; height:18px;" role="progressbar"></div>
-                    </div>
-                    <p class="mb-2 d-flex  fs-16 text-black font-w500">Completed
-                      <span class="ms-auto text-dark fs-14 font-w400">0/45</span>
-                    </p>
-                    <div class="progress mb-3" style="height:18px">
-                      <div class="progress-bar bg-primary progress-animated" style="width:0%; height:18px;" role="progressbar"></div>
-                    </div>
-                    <span class="text-white">Lorem, ipsum dolor sit amet consectetur adipisicing elit. </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <%# <div class="col-12 mb-4">
-          <div class="card">
-            <div class="card-body">
-              <div class="d-flex justify-content-between flex-sm-row flex-column gap-3">
-                <div class="d-flex flex-sm-column flex-row align-items-start justify-content-between">
-                  <div class="card-title">
-                    <h5 class="text-nowrap mb-2">Withdrawals stats</h5>
-                  </div>
-                  <div class="mt-sm-auto">
-                    
-                     <p class="mb-2 d-flex  fs-16 text-black font-w500">Pending
-                      <span class="ms-auto text-dark fs-14 font-w400">0/45</span>
-                    </p>
-                    <div class="progress mb-3" style="height:18px;">
-                      <div class="progress-bar bg-primary progress-animated" style="width:0%; height:18px;" role="progressbar"></div>
-                    </div>
-                    <p class="mb-2 d-flex  fs-16 text-black font-w500">Completed
-                      <span class="ms-auto text-dark fs-14 font-w400">0/45</span>
-                    </p>
-                    <div class="progress mb-3" style="height:18px">
-                      <div class="progress-bar bg-primary progress-animated" style="width:0%; height:18px;" role="progressbar"></div>
-                    </div>
-                    <span class="text-white">Lorem, ipsum dolor sit amet consectetur adipisicing elit. </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-         %>
-      </div>
-    </div>
-    
-  </div>
- 
+	<div class="row">
+		<div class="col-lg-8 mb-4 order-0">
+			<div class="card">
+				<div class="d-flex align-items-end row">
+					<div class="col-sm-7">
+						<div class="card-body">
+							<h5 class="card-title text-primary">Welcome Back Admin<span class="text-danger"> <%= current_user.first_name.present? ? current_user.first_name : current_user.username %>!</span> 🎉</h5>
+							<p class="mb-4">
+								Today is a brand new oppotunity to do more
+							</p>
+							<h4 class="pb-0 mb-0"><i class="menu-icon tf-icons bx bx-time"> <span id="clock" class="fw-bold"></span></i></h4>
+						</div>
+					</div>
+					<div class="col-sm-5 text-center text-sm-left">
+						<div class="card-body pb-0 px-0 px-md-4">
+							<%= image_tag "img/illustrations/man-with-laptop-light.png", height: "140", alt: "Badge user" %>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-lg-4 col-md-4 order-1">
+			<div class="row">
+				<div class="col-lg-6 col-md-12 col-6 mb-4">
+					<div class="card">
+						<div class="card-body">
+							<div class="card-title d-flex align-items-start justify-content-between">
+								<div class="avatar flex-shrink-0">
+									<i class='bx bx-group rounded fs-1'></i>
+								</div>
+							</div>
+							<span class="fw-semibold d-block mb-1">Students</span>
+							<h3 class="card-title mb-2"><%= @total_acc %></h3>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-6 col-md-12 col-6 mb-4">
+					<div class="card">
+						<div class="card-body">
+							<div class="card-title d-flex align-items-start justify-content-between">
+								<div class="avatar flex-shrink-0">
+									<i class='bx bx-group rounded fs-1'></i>
+								</div>
+							</div>
+							<span>Lecturers</span>
+							<h3 class="card-title text-nowrap mb-1"><%= @total_lec %></h3>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Total Revenue -->
+		<div class="col-12 col-lg-8 order-2 order-md-3 order-lg-2 mb-4">
+			<div class="card">
+				<div class="row row-bordered g-0">
+					<div class="col">
+						<h5 class="card-header m-0 me-2 pb-3">(5) Recent Deposits</h5>
+						<div class="table-responsive text-nowrap">
+							<table class="table table-striped">
+								<thead>
+									<tr>
+										<th>Reference</th>
+										<th>Amount</th>
+										<th>User</th>
+										<th>Status</th>
+										<th>Date</th>
+									</tr>
+								</thead>
+								<tbody class="table-border-bottom-0">
+									<% if @recent_deposits.present? %>
+										<% @recent_deposits.each do |deposit| %>
+											<tr>
+												<td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong><%= deposit.order_id %></strong></td>
+												<td><%= number_to_currency(deposit.amount, precision: 2) %></td>
+												<td>
+													<% full_name = "#{deposit.account&.first_name} #{deposit.account&.last_name}" if deposit.account&.first_name.present? && deposit.account&.last_name.present? %>
+													<%= full_name.present? ? full_name : "Awaiting names" %>
+												</td>
+												<td>
+													<% if deposit.status == "Pending" %>
+														<span class="badge bg-label-warning me-1"><%= deposit.status %></span>
+													<% elsif deposit.status == "Approved" %>
+														<span class="badge bg-label-success me-1"><%= deposit.status %></span>
+													<% elsif deposit.status == "Cancelled" %>
+														<span class="badge bg-label-danger me-1"><%= deposit.status %></span>
+													<% end %>
+												</td>
+												<td>
+													<%= deposit.created_at.strftime("	%d-%m-%Y ") %>
+												</td>
+											</tr>
+										<% end %>
+									<% else %>
+										<tr >
+											<td colspan="4" class="text-center fs-3 ">No Deposits Yet </td>
+										</tr>
+									<% end %>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="card mt-4">
+				<div class="row row-bordered g-0">
+					<div class="col">
+						<h5 class="card-header m-0 me-2 pb-3">(5) Recent Withdrawals</h5>
+						<div class="table-responsive text-nowrap">
+							<table class="table table-striped">
+								<thead>
+									<tr>
+										<th>Reference</th>
+										<th>Amount</th>
+										<th>User</th>
+										<th>Status</th>
+										<th>Date</th>
+									</tr>
+								</thead>
+								<tbody class="table-border-bottom-0">
+									<% if @recent_withdrawals.present? %>
+										<% @recent_withdrawals.each do |withdraw| %>
+											<tr>
+												<td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong><%= withdraw.order_id %></strong></td>
+												<td><%= number_to_currency(withdraw.amount, precision: 2) %></td>
+												<td>
+													<% full_name = "#{withdraw.account.first_name} #{withdraw.account.last_name}" if withdraw.account.first_name.present? && withdraw.account.last_name.present? %>
+													<%= full_name.present? ? full_name : "Awaiting names" %>
+												</td>
+												<td>
+													<% if withdraw.status == "Pending" %>
+														<span class="badge bg-label-warning me-1"><%= withdraw.status %></span>
+													<% elsif withdraw.status == "Approved" %>
+														<span class="badge bg-label-success me-1"><%= withdraw.status %></span>
+													<% elsif withdraw.status == "Cancelled" %>
+														<span class="badge bg-label-danger me-1"><%= withdraw.status %></span>
+													<% end %>
+												</td>
+												<td>
+													<%= withdraw.created_at.strftime("	%d-%m-%Y ") %>
+												</td>
+											</tr>
+										<% end %>
+									<% else %>
+										<tr >
+											<td colspan="4" class="text-center fs-3 ">No Withdrawals Yet </td>
+										</tr>
+									<% end %>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--/ Total Revenue -->
+		<div class="col-12 col-md-8 col-lg-4 order-3 order-md-2">
+			<div class="row">
+				<div class="col-6 mb-4">
+					<div class="card">
+						<div class="card-body">
+							<div class="card-title d-flex align-items-start justify-content-between">
+								<div class="avatar flex-shrink-0">
+									<i class='menu-icon fs-2 fw-bold bx bxs-graduation'></i>
+								</div>
+							</div>
+							<span class="d-block mb-1">Faculties</span>
+							<h3 class="card-title text-nowrap mb-2"><%= @total_fac %></h3>
+						</div>
+					</div>
+				</div>
+				<div class="col-6 mb-4">
+					<div class="card">
+						<div class="card-body">
+							<div class="card-title d-flex align-items-start justify-content-between">
+								<div class="avatar flex-shrink-0">
+									<i class='menu-icon fs-2 fw-bold bx bxs-graduation'></i>
+								</div>
+							</div>
+							<span class="fw-semibold d-block mb-1">Departments</span>
+							<h3 class="card-title mb-2"><%= @total_dep %></h3>
+						</div>
+					</div>
+				</div>
+				<div class="col-12 mb-4">
+					<div class="card">
+						<div class="card-body">
+							<div class="d-flex justify-content-between flex-sm-row flex-column gap-3">
+								<div class="d-flex flex-sm-column flex-row align-items-start justify-content-between">
+									<div class="card-title">
+										<h5 class="text-nowrap mb-2">Students Stats</h5>
+									</div>
+									<div class="mt-sm-auto">
+										<p class="mb-2 d-flex  fs-16 text-black font-w500">Pending
+											<span class="ms-auto text-dark fs-14 font-w400">0/45</span>
+										</p>
+										<div class="progress mb-3" style="height:18px;">
+											<div class="progress-bar bg-primary progress-animated" style="width:0%; height:18px;" role="progressbar"></div>
+										</div>
+										<p class="mb-2 d-flex  fs-16 text-black font-w500">Verified
+											<span class="ms-auto text-dark fs-14 font-w400">0/45</span>
+										</p>
+										<div class="progress mb-3" style="height:18px">
+											<div class="progress-bar bg-primary progress-animated" style="width:0%; height:18px;" role="progressbar"></div>
+										</div>
+										<span class="text-white">Lorem, ipsum dolor sit amet consectetur adipisicing elit. </span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
-
 <script>
-  document.addEventListener("turbo:load", function() {
-    function updateClock() {
-      let now = new Date();
-      let year = now.getFullYear().toString().slice(-2); // Extract last two digits of the year
-      let month = (now.getMonth() + 1).toString().padStart(2, '0'); // Month is zero-based
-      let day = now.getDate().toString().padStart(2, '0'); // Get the day of the month
+	document.addEventListener("turbo:load", function() {
+	  function updateClock() {
+	    let now = new Date();
+	    let year = now.getFullYear().toString().slice(-2); // Extract last two digits of the year
+	    let month = (now.getMonth() + 1).toString().padStart(2, '0'); // Month is zero-based
+	    let day = now.getDate().toString().padStart(2, '0'); // Get the day of the month
 
-      let hours = now.getHours();
-      let minutes = now.getMinutes();
-      let seconds = now.getSeconds();
+	    let hours = now.getHours();
+	    let minutes = now.getMinutes();
+	    let seconds = now.getSeconds();
 
-      // Determine AM or PM
-      let meridiem = hours < 12 ? 'AM' : 'PM';
+	    // Determine AM or PM
+	    let meridiem = hours < 12 ? 'AM' : 'PM';
 
-      // Convert hours to 12-hour format
-      hours = hours % 12;
-      hours = hours ? hours : 12; // Handle midnight (0 hours)
+	    // Convert hours to 12-hour format
+	    hours = hours % 12;
+	    hours = hours ? hours : 12; // Handle midnight (0 hours)
 
-      // Add leading zeros if necessary
-      hours = hours < 10 ? '0' + hours : hours;
-      minutes = minutes < 10 ? '0' + minutes : minutes;
-      seconds = seconds < 10 ? '0' + seconds : seconds;
+	    // Add leading zeros if necessary
+	    hours = hours < 10 ? '0' + hours : hours;
+	    minutes = minutes < 10 ? '0' + minutes : minutes;
+	    seconds = seconds < 10 ? '0' + seconds : seconds;
 
-      // Update the clock display
-      let clockElement = document.getElementById('clock');
-      clockElement.textContent = day + '.' + month + '.' + year + ' ' + hours + ':' + minutes + ':' + seconds + ' ' + meridiem;
-    }
+	    // Update the clock display
+	    let clockElement = document.getElementById('clock');
+	    clockElement.textContent = day + '.' + month + '.' + year + ' ' + hours + ':' + minutes + ':' + seconds + ' ' + meridiem;
+	  }
 
-    // Update the clock immediately and then every second
-    updateClock();
-    setInterval(updateClock, 1000);
-  });
+	  // Update the clock immediately and then every second
+	  updateClock();
+	  setInterval(updateClock, 1000);
+	});
 </script>

@@ -1,0 +1,263 @@
+<div class="container-xxl flex-grow-1 container-p-y">
+	<h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Configs/</span> School Configs</h4>
+	<!-- Basic Layout -->
+	<div class="row">
+		<div class="col-xl">
+			<div class="card mb-4">
+				<div class="card-header d-flex justify-content-between align-items-center">
+					<h5 class="mb-0">Create Faculty</h5>
+				</div>
+				<div class="card-body">
+					<%= form_with(model: @faculty, url: admin_school_config_create_faculty_path, method: :post, data: {turbo: false} ) do |form| %>
+						<div class="mb-3">
+							<%= form.label :name, "Faculty Name", class: "form-label" %>
+							<%= form.text_field :name, class: "form-control", placeholder: "eg. Arts & Design" %>
+						</div>
+						<%= form.submit "Create", class: "btn btn-primary" %>
+					<% end %>
+				</div>
+			</div>
+			<% if @faculties.present? %>
+				<div class="col-xl">
+					<div class="card mb-4">
+						<div class="card-header d-flex justify-content-between align-items-center">
+							<h5 class="mb-0">List of Faculty</h5>
+						</div>
+						<div class="card-body">
+							<div class="table-responsive text-nowrap">
+								<table class="table table-sm">
+									<thead>
+										<tr>
+											<th>No</th>
+											<th>Name</th>
+											<th>Actions</th>
+										</tr>
+									</thead>
+									<tbody class="table-border-bottom-0">
+										<% @faculties.each_with_index do |faculty, index| %>
+											<tr>
+												<% indexs = index + 1 %>
+												<td><%= indexs %></td>
+												<td><%= faculty.name %></td>
+												<td>
+													<button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modalCenter<%= faculty.id %>">
+														<i class='bx bxs-edit-alt' ></i> Edit
+													</button>
+												</td>
+											</tr>
+											<div class="modal fade" id="modalCenter<%= faculty.id %>" tabindex="-1" aria-hidden="true">
+												<div class="modal-dialog modal-dialog-centered" role="document">
+													<div class="modal-content">
+														<div class="modal-header">
+															<h5 class="modal-title">Edit Faculty Name</h5>
+															<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+														</div>
+														<div class="modal-body">
+															<%= form_with(model: faculty, url: admin_update_faculty_path(faculty), method: :patch, local: true) do |form| %>
+																<div class="row">
+																	<div class="col mb-3">
+																		<%= form.label :name, "Faculty Name", class: "form-label" %>
+																		<%= form.text_field :name, class: "form-control", placeholder: "Enter Name", value: faculty.name %>
+																	</div>
+																</div>
+															</div>
+															<div class="modal-footer">
+																<button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+																<%= form.submit "Save changes", class: "btn btn-primary" %>
+															</div>
+														<% end %>
+													</div>
+												</div>
+											</div>
+										<% end %>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			<% end %>
+		</div>
+		<div class="col-xl">
+			<div class="card mb-4">
+				<div class="card-header d-flex justify-content-between align-items-center">
+					<h5 class="mb-0">Create Department</h5>
+				</div>
+				<div class="card-body">
+					<%= form_with(model: @department, url: admin_school_config_create_department_path, method: :post, data: {turbo: false}) do |form| %>
+						<div class="mb-3">
+							<%= form.label :faculty_id, "Select Faculty", class: "form-label" %>
+							<%= form.collection_select :faculty_id, @faculties, :id, :name, { prompt: "Select Faculty" }, class: "form-select" %>
+						</div>
+						<div class="mb-3">
+							<%= form.label :name, "Department Name", class: "form-label" %>
+							<%= form.text_field :name, class: "form-control", placeholder: "eg. Engineering" %>
+						</div>
+						<%= form.submit "Create", class: "btn btn-primary" %>
+					<% end %>
+				</div>
+			</div>
+			<% if @departments.present? %>
+				<div class="col-xl">
+					<div class="card mb-4">
+						<div class="card-header d-flex justify-content-between align-items-center">
+							<h5 class="mb-0">List of Departments</h5>
+						</div>
+						<div class="card-body">
+							<div class="table-responsive text-nowrap">
+								<table class="table table-sm">
+									<thead>
+										<tr>
+											<th>No</th>
+											<th>Name</th>
+											<th>Actions</th>
+										</tr>
+									</thead>
+									<tbody class="table-border-bottom-0">
+										<% @departments.each_with_index do |department, index| %>
+											<tr>
+												<% indexs = index + 1 %>
+												<td><%= indexs %></td>
+												<td><strong><%= department.name %></strong></td>
+												<td>
+													<button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modalCenter<%= department.id %>">
+														<i class='bx bxs-edit-alt' ></i> Edit
+													</button>
+												</td>
+											</tr>
+											<%#  %>
+											<div class="modal fade" id="modalCenter<%= department.id %>" tabindex="-1" aria-hidden="true">
+												<div class="modal-dialog modal-dialog-centered" role="document">
+													<div class="modal-content">
+														<div class="modal-header">
+															<h5 class="modal-title">Edit Department Name</h5>
+															<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+														</div>
+														<div class="modal-body">
+															<%= form_with(model: department, url: admin_update_department_path(department), method: :patch, local: true) do |form| %>
+																<div class="row">
+																	<div class="col mb-3">
+																		<%= form.label :name, "Faculty Name", class: "form-label" %>
+																		<%= form.text_field :name, class: "form-control", placeholder: "Enter Name", value: department.name %>
+																	</div>
+																</div>
+															</div>
+															<div class="modal-footer">
+																<button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+																<%= form.submit "Save changes", class: "btn btn-primary" %>
+															</div>
+														<% end %>
+													</div>
+												</div>
+											</div>
+										<% end %>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			<% end %>
+		</div>
+	</div>
+	<div class="divider">
+		<div class="divider-text">Courses</div>
+	</div>
+	<div class="row">
+		<div class="col-xl">
+			<div class="card mb-4">
+				<div class="card-header d-flex justify-content-between align-items-center">
+					<h5 class="mb-0">Create Courses</h5>
+				</div>
+				<div class="card-body">
+					<%= form_with(model: @course, url: admin_school_config_create_courses_path, method: :post, data: {turbo: false}) do |form| %>
+						<div class="mb-3">
+							<%= form.label :department_id, "Select Department", class: "form-label" %>
+							<%= form.collection_select :department_id, @departments, :id, :name, { prompt: "-- Select Department --" }, class: "form-select" %>
+						</div>
+						<div class="mb-3">
+							<%= form.label :course_code, "Course Code", class: "form-label" %>
+							<%= form.text_field :course_code, class: "form-control", placeholder: "eg. MTH 100" %>
+						</div>
+						<div class="mb-3">
+							<%= form.label :course_title, "Course Title", class: "form-label" %>
+							<%= form.text_field :course_title, class: "form-control", placeholder: "eg. Algebraic Mathematics" %>
+						</div>
+						<%= form.submit "Create", class: "btn btn-primary" %>
+					<% end %>
+				</div>
+			</div>
+		</div>
+		<div class="col-xl">
+			<div class="card mb-4">
+				<div class="card-header d-flex justify-content-between align-items-center">
+					<h5 class="mb-0">List of Courses</h5>
+				</div>
+				<div class="card-body">
+					<div class="table-responsive text-nowrap">
+						<table class="table table-sm">
+							<thead>
+								<tr>
+									<th>No</th>
+									<th>Code</th>
+									<th>Title</th>
+									<th>Actions</th>
+								</tr>
+							</thead>
+							<tbody class="table-border-bottom-0">
+								<% if @courses.present? %>
+									<% @courses.each_with_index do |course, index| %>
+										<tr>
+											<% indexs = index + 1 %>
+											<td><%= indexs %></td>
+											<td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong><%= course.course_code %></strong></td>
+											<td><%= course.course_title %></td>
+											<td>
+												<button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modalCenter<%= course.id %>">
+													<i class='bx bxs-edit-alt' ></i> Edit
+												</button>
+											</td>
+										</tr>
+										<%#  %>
+										<div class="modal fade" id="modalCenter<%= course.id %>" tabindex="-1" aria-hidden="true">
+											<div class="modal-dialog modal-dialog-centered" role="document">
+												<div class="modal-content">
+													<div class="modal-header">
+														<h5 class="modal-title">Edit Course</h5>
+														<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+													</div>
+													<div class="modal-body">
+														<%= form_with(model: course, url: admin_update_courses_path(course), method: :patch, local: true) do |form| %>
+															<div class="row">
+																<div class="col mb-3">
+																	<%= form.label :course_code, "Faculty Name", class: "form-label" %>
+																	<%= form.text_field :course_code, class: "form-control", placeholder: "Enter Name", value: course.course_code %>
+																</div>
+																<div class="col mb-3">
+																	<%= form.label :course_title, "Faculty Name", class: "form-label" %>
+																	<%= form.text_field :course_title, class: "form-control", placeholder: "Enter Name", value: course.course_title %>
+																</div>
+															</div>
+														</div>
+														<div class="modal-footer">
+															<button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+															<%= form.submit "Save changes", class: "btn btn-primary" %>
+														</div>
+													<% end %>
+												</div>
+											</div>
+										</div>
+									<% end %>
+								<% else %>
+									<tr>
+										<td colspan="4" class="text-center fs-3 ">Ops Nothing here! </td>
+									</tr>
+								<% end %>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

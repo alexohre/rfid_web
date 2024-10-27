@@ -2,6 +2,9 @@ class Admin::DashboardController < AdminController
   def home
     @title = "Home"
     @total_acc = Account.count
+    @total_lec = Lecturer.count
+    @total_fac = Faculty.count
+    @total_dep = Department.count
   end
 
   def users
