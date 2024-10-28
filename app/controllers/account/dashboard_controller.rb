@@ -3,9 +3,8 @@ class Account::DashboardController < AccountController
     @title = "Account Dashboard"
   end
 
-  def subscription
-    @title = "Account Subscription"
-    @subscription = current_account.subscription || @current_account.build_subscription(plan: 'free') # Create a subscription if not present
+  def notifications
+    @title = "Account notifications"
   end
 
   def revert_masquerade

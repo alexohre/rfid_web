@@ -1,0 +1,66 @@
+<div class="container-xxl flex-grow-1 container-p-y">
+	<h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Admin /</span> Users</h4>
+	<div class="row">
+		<div class="card">
+			<div class="col-md-3">
+				<%= search_form_for @q, url: admin_student_pending_url do |f| %>
+					<div class="input-group mt-3 mb-2">
+						<%= f.search_field :email_or_first_name_or_last_name_cont, class: "form-control", placeholder: "Search user..." %>
+						<%# <input type="text" class="form-control" placeholder="Search User..." aria-label="Search User..." aria-describedby="button-addon2"> %>
+						<button class="btn btn-primary" type="submit" id="button-addon2" data-turbo="false">
+							<span class="tf-icons bx bx-search-alt"></span>
+							Search
+						</button>
+					</div>
+				<% end %>
+			</div>
+			<div class="table-responsive text-nowrap">
+				<table class="table table-striped mb-2">
+					<thead>
+						<tr>
+							<th>Email</th>
+							<th>Username</th>
+							<th>Names</th>
+							<th>Image</th>
+							<th>Status</th>
+							<th>Actions</th>
+						</tr>
+					</thead>
+					<tbody class="table-border-bottom-0">
+						<% @pending_accounts.each do |account|  %>
+							<tr>
+								<td><%= account.email %></td>
+								<td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong><%= account.username %></strong></td>
+								<% full_name = "#{account.first_name} #{account.last_name}" if account.first_name.present? && account.last_name.present? %>
+								<td><%= full_name.present? ? full_name : 'awaiting names' %></td>
+								<td>
+									<ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
+										<li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="" data-bs-original-title="<%= full_name.present? ? full_name : 'awaiting names' %>">
+											<%= account.avatar.present? ? image_tag(account.avatar.variant(resize_to_fill: [100, 100]), class: "rounded-circle", alt: "Avatar") : image_tag("img/avatars/5.png", alt: "avatar", class: "rounded-circle") %>
+										</li>
+									</ul>
+								</td>
+								<td><span class="badge bg-label-warning me-1"><%= account.status %></span></td>
+								<td>
+									<div class="dropdown" >
+										<button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+											<i class="bx bx-dots-vertical-rounded"></i>
+										</button>
+										<div class="dropdown-menu" >
+											<a class="dropdown-item text-info" href="<%= admin_url(account) %>" data-turbo="false"><i class="bx bx-show-alt me-1"></i> view</a>
+											<%# <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-edit-alt me-1"></i> Edit</a> %>
+											<a class="dropdown-item" href="<%= admin_masquerade_as_account_path(id: account.id) %>" data-turbo-method="post"><i class="bx bx-log-in me-1"></i> Login as</a>
+											<a class="dropdown-item text-danger" href="<%= admin_url(account) %>" data-turbo-method="delete" data-turbo-confirm="Are you sure? all the records of <%= "#{full_name}" %> will be deleted "><i class="bx bx-trash me-1"></i> Delete</a>
+										</div>
+									</div>
+								</td>
+							</tr>
+						<% end %>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<%# pagination %>
+		<%= render 'admin/shared/pagy', locals: {pagy: @pagy} %>
+	</div>
+</div>

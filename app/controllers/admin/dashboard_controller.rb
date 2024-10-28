@@ -7,11 +7,16 @@ class Admin::DashboardController < AdminController
     @total_dep = Department.count
   end
 
-  def users
-    @title = "Users"
-    @q = Account.ransack(params[:q])
-    @pagy, @accounts = pagy(@q.result(distinct: true).includes(avatar_attachment: :blob).order(id: :desc), items: 8)
-    # @pagy, @accounts = pagy(Account.includes(avatar_attachment: :blob).order(id: :desc), items: 8)
+  def student_pending
+    @title = "Pending Students"
+    @q = Account.where(status: :pending).ransack(params[:q]) # Fetch accounts where verification_status is pending
+    @pagy, @pending_accounts = pagy(@q.result(distinct: true).includes(avatar_attachment: :blob).order(id: :desc), items: 8)
+  end
+
+  def student_verified
+    @title = "Verified Students"
+    @q = Account.where(status: :verified).ransack(params[:q]) # Fetch accounts where verification_status is verified
+    @pagy, @verified_accounts = pagy(@q.result(distinct: true).includes(avatar_attachment: :blob).order(id: :desc), items: 8)
   end
 
   def masquerade_as_account

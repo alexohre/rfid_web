@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_10_26_204114) do
+ActiveRecord::Schema[7.0].define(version: 2024_10_27_233359) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -41,8 +41,17 @@ ActiveRecord::Schema[7.0].define(version: 2024_10_26_204114) do
     t.string "zip_code"
     t.string "state"
     t.string "country"
+    t.integer "status", default: 0
+    t.string "tag_id"
+    t.string "mat_no"
+    t.string "lga"
+    t.string "other_name"
+    t.bigint "faculty_id"
+    t.bigint "department_id"
     t.index ["confirmation_token"], name: "index_accounts_on_confirmation_token", unique: true
+    t.index ["department_id"], name: "index_accounts_on_department_id"
     t.index ["email"], name: "index_accounts_on_email", unique: true
+    t.index ["faculty_id"], name: "index_accounts_on_faculty_id"
     t.index ["reset_password_token"], name: "index_accounts_on_reset_password_token", unique: true
   end
 
@@ -116,6 +125,15 @@ ActiveRecord::Schema[7.0].define(version: 2024_10_26_204114) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "lecturer_courses", force: :cascade do |t|
+    t.bigint "lecturer_id", null: false
+    t.bigint "course_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["course_id"], name: "index_lecturer_courses_on_course_id"
+    t.index ["lecturer_id"], name: "index_lecturer_courses_on_lecturer_id"
+  end
+
   create_table "lecturers", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -127,6 +145,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_10_26_204114) do
     t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "phone_number"
+    t.string "gender"
     t.index ["email"], name: "index_lecturers_on_email", unique: true
     t.index ["reset_password_token"], name: "index_lecturers_on_reset_password_token", unique: true
   end
@@ -154,8 +174,12 @@ ActiveRecord::Schema[7.0].define(version: 2024_10_26_204114) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "accounts", "departments"
+  add_foreign_key "accounts", "faculties"
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "courses", "departments"
   add_foreign_key "departments", "faculties"
+  add_foreign_key "lecturer_courses", "courses"
+  add_foreign_key "lecturer_courses", "lecturers"
 end

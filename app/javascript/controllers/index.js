@@ -4,6 +4,9 @@
 
 import { application } from "./application"
 
+import FacultyDepartmentController from "./faculty_department_controller"
+application.register("faculty-department", FacultyDepartmentController)
+
 import FetchTitleController from "./fetch_title_controller"
 application.register("fetch-title", FetchTitleController)
 

@@ -1,0 +1,64 @@
+<div class="container-xxl flex-grow-1 container-p-y">
+	<h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Users /</span> Profile</h4>
+	<div class="row">
+		<div class="col-md-12">
+			<div class="card mb-4">
+				<h5 class="card-header">Profile Details</h5>
+				<div class="card-body">
+					<div class="row">
+						<div class="col-lg-6">
+							<div class="d-flex align-items-start align-items-sm-center gap-4" data-controller="previews">
+								<% if @lecturer.avatar.present? %>
+									<%= image_tag(@lecturer.avatar.variant(resize_to_fill: [200, 200]),  class: "d-block rounded", height: 200, width: 200, id: "uploadAvatar", alt: "lecturer-avatar") %>
+								<% else %>
+									<%= image_tag "img/avatars/1.png", alt: "lecturer-avatar", class: "d-block rounded", height: 200, width: 200  %>
+								<% end %>
+							</div>
+						</div>
+						<div class="col-lg-6">
+							<%= form_with(model: @lecturer, url: update_courses_admin_lecturer_path(@lecturer), method: :patch, local: true) do |form| %>
+								<div class="mb-3">
+									<%= form.label :course_ids, "Assign Course", class: "form-label" %>
+									<%= form.collection_select :course_ids, @courses, :id, ->(course) { "#{course.course_code} - #{course.course_title}" }, { prompt: "Select Course" }, { class: "form-select" } %>
+								</div>
+								<%= form.submit "Assign Courses", class: "btn btn-primary mt-3" %>
+							<% end %>
+						</div>
+					</div>
+				</div>
+				<hr class="my-0">
+				<div class="card-body">
+					<div class="row">
+						<div class="mb-3 col-md-6">
+							<strong>First Name:</strong> <%= @lecturer.first_name.present? ? @lecturer.first_name : "NIL" %>
+						</div>
+						<div class="mb-3 col-md-6">
+							<strong>Last Name:</strong> <%= @lecturer.last_name.present? ? @lecturer.last_name : "NIL" %>
+						</div>
+						<div class="mb-3 col-md-6">
+							<strong>Email:</strong> <%= @lecturer.email.present? ? @lecturer.email : "NIL" %>
+						</div>
+						<div class="mb-3 col-md-6">
+							<strong>Phone Number:</strong> <%= @lecturer.phone_number.present? ? @lecturer.phone_number : "NIL" %>
+						</div>
+						<div class="mb-3 col-md-6">
+							<strong>Courses:</strong>
+							<% if @lecturer.courses.any? %>
+								<div class="mt-2">
+									<% @lecturer.courses.each do |course| %>
+										<div class=""><i><%= "#{course.course_code} --> #{course.course_title}" %></i></div>
+									<% end %>
+								</div>
+							<% else %>
+								<i class="text-muted">NIL</i>
+							<% end %>
+						</div>
+						<div class="mb-3 col-md-6">
+							<strong>Gender:</strong> <%= @lecturer.gender.present? ? @lecturer.gender : "NIL" %>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

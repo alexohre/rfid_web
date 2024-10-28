@@ -46,8 +46,8 @@
 				</ul>
 			</li>
 			<!-- Components -->
-			<li class="menu-item <%#= 'activ' if request.path == account_dashboard_path %>">
-				<a href="<%#= account_dashboard_path %>" data-turbo="false" class="menu-link" >
+			<li class="menu-item <%= 'active' if request.path == account_dashboard_notifications_path %>">
+				<a href="<%= account_dashboard_notifications_path %>" data-turbo="false" class="menu-link" >
 					<i class="menu-icon tf-icons bx bx-bell"></i>
 					<div data-i18n="Analytics">Notifications</div>
 				</a>

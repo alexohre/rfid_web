@@ -4,13 +4,15 @@ Rails.application.routes.draw do
   namespace :account do
     resource :subscription, only: [ :update]
     get 'dashboard', to: 'dashboard#home'
-    get 'dashboard/subscription', to: 'dashboard#subscription'
+    get 'dashboard/notifications', to: 'dashboard#notifications'
     post 'revert_masquerade', to: "dashboard#revert_masquerade"
     # setting
     get 'settings/change_password', to: 'setting#change_password'
     get 'settings/profile', to: 'setting#profile'
 
     resources :urls, param: :short_code
+
+
   end
 
 
@@ -23,10 +25,23 @@ Rails.application.routes.draw do
       end
     end
 
+    resources :faculties do
+      get 'departments', on: :member
+    end
+
     resource :site, only: [:new, :create, :edit, :update]
     get 'dashboard', to: 'dashboard#home'
-    get 'users', to: 'dashboard#users'
-    get 'users/:id', to: 'dashboard#show'
+    get 'student_pending', to: 'dashboard#student_pending'
+    get 'student_verified', to: 'dashboard#student_verified'
+    get 'students/:id', to: 'dashboard#show'
+    # get 'lecturers', to: 'dashboard#lecturers'
+    # get 'lecturers/:id', to: 'dashboard#shows'
+    resources :lecturers, only: [:index, :show, :create, :new, :edit, :update, :destroy] do
+      member do
+        get :assign_courses   # Route for the assignment form
+        patch :update_courses # Route for submitting the form
+      end
+    end
     post 'masquerade_as_account', to: 'dashboard#masquerade_as_account'
     # delete account
     delete 'users/:id', to: 'dashboard#destroy'

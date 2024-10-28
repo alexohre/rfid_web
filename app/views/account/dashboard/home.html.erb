@@ -84,7 +84,11 @@
 								</div>
 							</div>
 							<span class="fw-semibold d-block mb-1">Account Status</span>
-							<h5 class="card-title mb-2"><span class="badge bg-warning">Pending</span></h5>
+							<% if current_account.status == "pending" %>
+								<h5 class="card-title mb-2"><span class="badge bg-warning">Pending</span></h5>
+							<% else %>
+								<h5 class="card-title mb-2"><span class="badge bg-primary">Verified</span></h5>
+							<% end %>
 						</div>
 					</div>
 				</div>

@@ -24,6 +24,9 @@
 							<strong>Last Name:</strong> <%= current_account.last_name.present? ? current_account.last_name : "NIL" %>
 						</div>
 						<div class="mb-3 col-md-6">
+							<strong>Other Name:</strong> <%= current_account.other_name.present? ? current_account.other_name : "NIL" %>
+						</div>
+						<div class="mb-3 col-md-6">
 							<strong>Email:</strong> <%= current_account.email.present? ? current_account.email : "NIL" %>
 						</div>
 						<div class="mb-3 col-md-6">
@@ -42,13 +45,25 @@
 							<strong>Zip Code:</strong> <%= current_account.zip_code.present? ? current_account.zip_code : "NIL" %>
 						</div>
 						<div class="mb-3 col-md-6">
-							<strong>Country:</strong> <%= current_account.country.present? ? current_account.country : "NIL" %>
+							<strong>Nationality:</strong> <%= current_account.country.present? ? current_account.country : "NIL" %>
 						</div>
 						<div class="mb-3 col-md-6">
 							<strong>Date of Birth:</strong> <%= current_account.date_of_birth.present? ? current_account.date_of_birth : "NIL" %>
 						</div>
 						<div class="mb-3 col-md-6">
 							<strong>Gender:</strong> <%= current_account.gender.present? ? current_account.gender : "NIL" %>
+						</div>
+						<div class="mb-3 col-md-6">
+							<strong>Tag ID:</strong> <%= current_account.tag_id.present? ? current_account.tag_id : "NIL" %>
+						</div>
+						<div class="mb-3 col-md-6">
+							<strong>Mat No:</strong> <%= current_account.mat_no.present? ? current_account.mat_no : "NIL" %>
+						</div>
+						<div class="mb-3 col-md-6">
+							<strong>Faculty:</strong> <%= current_account.faculty.present? ? current_account.faculty.name : "NIL" %>
+						</div>
+						<div class="mb-3 col-md-6">
+							<strong>Department:</strong> <%= current_account.department.present? ? current_account.department.name : "NIL" %>
 						</div>
 					</div>
 				</div>

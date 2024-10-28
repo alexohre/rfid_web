@@ -3,7 +3,7 @@
 	<div class="row">
 		<div class="card">
 			<div class="col-md-3">
-				<%= search_form_for @q, url: admin_users_url do |f| %>
+				<%= search_form_for @q, url: admin_student_verified_url do |f| %>
 					<div class="input-group mt-3 mb-2">
 						<%= f.search_field :email_or_first_name_or_last_name_cont, class: "form-control", placeholder: "Search user..." %>
 						<%# <input type="text" class="form-control" placeholder="Search User..." aria-label="Search User..." aria-describedby="button-addon2"> %>
@@ -27,7 +27,7 @@
 						</tr>
 					</thead>
 					<tbody class="table-border-bottom-0">
-						<% @accounts.each do |account|  %>
+						<% @verified_accounts.each do |account|  %>
 							<tr>
 								<td><%= account.email %></td>
 								<td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong><%= account.username %></strong></td>
@@ -40,7 +40,7 @@
 										</li>
 									</ul>
 								</td>
-								<td><span class="badge bg-label-primary me-1">Active</span></td>
+								<td><span class="badge bg-label-primary me-1"><%= account.status %></span></td>
 								<td>
 									<div class="dropdown" >
 										<button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">

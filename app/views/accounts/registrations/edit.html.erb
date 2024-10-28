@@ -26,7 +26,7 @@
 					<hr class="my-0">
 					<div class="card-body">
 						<%= render "accounts/shared/error_messages", resource: resource %>
-						<div class="row">
+						<div class="row" data-controller="faculty-department">
 							<div class="mb-3 col-md-6">
 								<%= f.label :first_name, class: "form-label" %> <span class="text-danger">*</span>
 								<%= f.text_field :first_name, class: "form-control", placeholder: "John" %>
@@ -36,12 +36,24 @@
 								<%= f.text_field :last_name, class: "form-control", placeholder: "Doe" %>
 							</div>
 							<div class="mb-3 col-md-6">
+								<%= f.label :other_name, class: "form-label" %> <span class="text-danger">*</span>
+								<%= f.text_field :other_name, class: "form-control", placeholder: "eg mike" %>
+							</div>
+							<div class="mb-3 col-md-6">
 								<%= f.label :email, class: "form-label" %> <span class="text-danger">*</span>
 								<%= f.email_field :email, autocomplete: "email", class: "form-control", readonly: true %>
 							</div>
 							<div class="mb-3 col-md-6">
 								<%= f.label :username, class: "form-label" %> <span class="text-danger">*</span>
 								<%= f.text_field :username, class: "form-control" %>
+							</div>
+							<div class="mb-3 col-md-6">
+								<%= f.label :mat_no, class: "form-label" %> <span class="text-danger">*</span>
+								<%= f.text_field :mat_no, class: "form-control", placeholder: "eg EEE/BSC/00000" %>
+							</div>
+							<div class="mb-3 col-md-6">
+								<%= f.label :tag_id, class: "form-label" %> <span class="text-danger">*</span>
+								<%= f.text_field :tag_id, class: "form-control", placeholder: "eg. 90988878", readonly: true %>
 							</div>
 							<div class="mb-3 col-md-6">
 								<%= f.label :phone_number, class: "form-label" %>
@@ -60,8 +72,8 @@
 								<%= f.text_field :zip_code, class: "form-control", placeholder: "231465", maxlength: 6 %>
 							</div>
 							<div class="mb-3 col-md-6">
-								<%= f.label :country, class: "form-label" %> <span class="text-danger">*</span>
-								<%= f.text_field :country, class: "form-control", placeholder: "United States" %>
+								<%= f.label :country, "Nationality", class: "form-label" %> <span class="text-danger">*</span>
+								<%= f.text_field :country, class: "form-control", placeholder: "eg. Nigerian" %>
 							</div>
 							<div class="mb-3 col-md-6">
 								<%= f.label :date_of_birth, class: "form-label" %>
@@ -69,7 +81,24 @@
 							</div>
 							<div class="mb-3 col-md-6">
 								<%= f.label :gender, class: "form-label" %> <span class="text-danger">*</span>
-								<%= f.select :gender, options_for_select([['Male', 'male'], ['Female', 'female'], ['Trans', 'trans'], ['Binary', 'binary'],['Non Binary', 'non binary'],['Genderfluid', 'genderfluid'],['Agender', 'agender'],['Rather not say', 'rather not say']], selected: resource.gender), { prompt: "Select gender" }, class: "form-control" %>
+								<%= f.select :gender, options_for_select([['Male', 'male'], ['Female', 'female'], 	['Rather not say', 'rather not say']], selected: resource.gender), { prompt: "Select gender" }, class: "form-control" %>
+							</div>
+							<div class="mb-3 col-md-6">
+								<%= f.label :faculty_id, "Faculty", class: "form-label" %> <span class="text-danger">*</span>
+								<%= f.collection_select :faculty_id, Faculty.all, :id, :name,
+									{ prompt: "Select Faculty" },
+									{ class: "form-select", data: { action: "change->faculty-department#updateDepartments" },
+										selected: @account.faculty_id } %>
+							</div>
+							<div class="mb-3 col-md-6">
+								<%= f.label :department_id, "Department", class: "form-label" %> <span class="text-danger">*</span>
+								<%= f.collection_select :department_id,
+									@account.faculty ? @account.faculty.departments : [],
+									:id, :name,
+									{ prompt: "Select Department" },
+									{ class: "form-select",
+										data: { "faculty-department-target": "department" },
+										selected: @account.department_id } %>
 							</div>
 						</div>
 						<div class="mt-2">

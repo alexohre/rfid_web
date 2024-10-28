@@ -23,34 +23,39 @@
 			<span class="menu-header-text">Pages</span>
 		</li>
 		<% if defined?(@account) && @account.present? %>
-			<li class="menu-item <%= 'active open' if request.path == admin_users_path || request.path == admin_path(@account) %>">
+			<li class="menu-item <%= 'active open' if request.path == admin_student_pending_path|| request.path == admin_student_verified_path || request.path == admin_path(@account) %>">
 			<% else %>
-				<li class="menu-item <%= 'active open' if request.path == admin_users_path %>">
+				<li class="menu-item <%= 'active open' if request.path == admin_student_pending_path || request.path == admin_student_verified_path %>">
 				<% end %>
 				<a href="javascript:void(0);" class="menu-link menu-toggle">
 					<i class="menu-icon tf-icons bx bx-group"></i>
 					<div data-i18n="Account Settings">Students</div>
 				</a>
 				<ul class="menu-sub">
-					<li class="menu-item <%= 'active' if request.path == admin_users_path %>">
-						<a href="<%= admin_users_path%>" class="menu-link" data-turbo="false">
-							<div data-i18n="Account">Overview</div>
+					<li class="menu-item <%= 'active' if request.path == admin_student_pending_path %>">
+						<a href="<%= admin_student_pending_path%>" class="menu-link" data-turbo="false">
+							<div data-i18n="Account">Pending</div>
+						</a>
+					</li>
+					<li class="menu-item <%= 'active' if request.path == admin_student_verified_path %>">
+						<a href="<%= admin_student_verified_path%>" class="menu-link" data-turbo="false">
+							<div data-i18n="Account">Verified</div>
 						</a>
 					</li>
 				</ul>
 			</li>
-			<% if defined?(@account) && @account.present? %>
-				<li class="menu-item <%= 'active open' if request.path == admin_users_path || request.path == admin_path(@account) %>">
+			<% if defined?(@lecturer) && @lecturer.present? %>
+				<li class="menu-item <%= 'active open' if request.path == admin_lecturers_path || request.path == admin_lecturer_path(@lecturer) %>">
 				<% else %>
-					<li class="menu-item <%= 'active open' if request.path == admin_users_path %>">
+					<li class="menu-item <%= 'active open' if request.path == admin_lecturers_path %>">
 					<% end %>
 					<a href="javascript:void(0);" class="menu-link menu-toggle">
 						<i class="menu-icon tf-icons bx bx-group"></i>
 						<div data-i18n="Account Settings">Lecturers</div>
 					</a>
 					<ul class="menu-sub">
-						<li class="menu-item <%= 'active' if request.path == admin_users_path %>">
-							<a href="<%= admin_users_path%>" class="menu-link" data-turbo="false">
+						<li class="menu-item <%= 'active' if request.path == admin_lecturers_path %>">
+							<a href="<%= admin_lecturers_path%>" class="menu-link" data-turbo="false">
 								<div data-i18n="Account">Overview</div>
 							</a>
 						</li>

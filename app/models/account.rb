@@ -7,6 +7,11 @@ class Account < ApplicationRecord
 
   before_create :generate_username
 
+  belongs_to :faculty, optional: true
+  belongs_to :department, optional: true
+  
+  enum status: { pending: 0, active: 1 }
+
   has_one_attached :avatar, dependent: :destroy
 
   validates :first_name, :last_name, :username, :address, :state, :country, :gender, presence: true, unless: :new_record?
