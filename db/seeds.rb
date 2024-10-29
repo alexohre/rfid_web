@@ -9,3 +9,7 @@
 
 Semester.find_or_create_by(name: "First Semester")
 Semester.find_or_create_by(name: "Second Semester")
+
+if User.count.zero?
+  User.create!(email: "admin@example.com", password: "password")
+end
