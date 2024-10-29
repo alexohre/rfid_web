@@ -4,6 +4,9 @@
 
 import { application } from "./application"
 
+import ExamRegistrationController from "./exam_registration_controller"
+application.register("exam-registration", ExamRegistrationController)
+
 import FacultyDepartmentController from "./faculty_department_controller"
 application.register("faculty-department", FacultyDepartmentController)
 

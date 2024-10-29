@@ -13,18 +13,33 @@ class Account::ExamsController < AccountController
 
     # Post action to register for selected courses
     if request.post?
-      selected_course_ids = params[:course_ids] || []
-      selected_courses = Course.where(id: selected_course_ids, semester: @semester)
-
-      selected_courses.each do |course|
-        ExamRegistration.find_or_create_by(account: current_account, course: course, exam: course.exam)
+      unless params[:semester_id].present?
+        return render json: { success: false, message: "Please select a semester." }, status: :unprocessable_entity
       end
 
-      flash[:notice] = "Successfully registered for selected courses."
-      redirect_to my_exams_account_exams_path
+      begin
+        @semester = Semester.find(params[:semester_id])
+        selected_course_ids = params[:course_ids] || []
+        selected_courses = Course.where(id: selected_course_ids, semester: @semester)
+
+        selected_courses.each do |course|
+          ExamRegistration.find_or_create_by!(account: current_account, course: course, exam: course.exam)
+        end
+
+        render json: {
+          success: true,
+          message: "Successfully registered for selected courses.",
+          redirect_url: my_exams_account_exams_path
+        }
+      rescue ActiveRecord::RecordNotFound
+        logger.error("Semester not found with id: #{params[:semester_id]}")
+        render json: { success: false, message: "Invalid semester selected." }, status: :not_found
+      rescue => e
+        logger.error("Registration error: #{e.message}")
+        render json: { success: false, message: "An error occurred while registering courses: #{e.message}" }, status: :unprocessable_entity
+      end
     end
   end
-
 
   private
 

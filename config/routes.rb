@@ -10,13 +10,13 @@ Rails.application.routes.draw do
     get 'settings/change_password', to: 'setting#change_password'
     get 'settings/profile', to: 'setting#profile'
 
-    get "dashboard/register_exam", to: "exams#register_exam"
-    get "dashboard/my_exams", to: "exams#my_exams"
+    get "dashboard/register_exam", to: "exams#register_exam", as: :dashboard_register_exam
+    get "dashboard/my_exams", to: "exams#my_exams", as: :dashboard_my_exams
 
+    # Exams resources
     resources :exams, only: [] do
       collection do
-        get :register_exam
-        post :register_exam
+        match :register_exam, via: [:get, :post], defaults: { format: 'html' }
         get :my_exams
         get :search_courses
       end

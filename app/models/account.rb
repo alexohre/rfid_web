@@ -27,7 +27,6 @@ class Account < ApplicationRecord
 
   def self.ransackable_associations(auth_object = nil)
     ["avatar_attachment", "avatar_blob"]
-    # ["avatar_attachment", "avatar_blob", "deposits", "trades", "withdrawals"]
   end
 
   def generate_username
