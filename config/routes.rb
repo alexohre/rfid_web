@@ -43,6 +43,10 @@ Rails.application.routes.draw do
     get 'student_pending', to: 'dashboard#student_pending'
     get 'student_verified', to: 'dashboard#student_verified'
     get 'students/:id', to: 'dashboard#show'
+    post "update_student/:id", to: "dashboard#update_student", as: :update_student
+
+    post "update_student_status/:id", to: "dashboard#update_student_status", as: :update_student_status
+
     # get 'lecturers', to: 'dashboard#lecturers'
     # get 'lecturers/:id', to: 'dashboard#shows'
     resources :lecturers, only: [:index, :show, :create, :new, :edit, :update, :destroy] do

@@ -5,12 +5,31 @@
 			<div class="card mb-4">
 				<h5 class="card-header">Profile Details</h5>
 				<div class="card-body">
-					<div class="d-flex align-items-start align-items-sm-center gap-4" data-controller="previews">
-						<% if @account.avatar.present? %>
-							<%= image_tag(@account.avatar.variant(resize_to_fill: [200, 200]),  class: "d-block rounded", height: 200, width: 200, id: "uploadAvatar", alt: "account-avatar") %>
-						<% else %>
-							<%= image_tag "img/avatars/1.png", alt: "account-avatar", class: "d-block rounded", height: 200, width: 200  %>
-						<% end %>
+					<div class="row">
+						<div class="col-lg-4">
+							<div class="d-flex align-items-start align-items-sm-center gap-4" data-controller="previews">
+								<% if @account.avatar.present? %>
+									<%= image_tag(@account.avatar.variant(resize_to_fill: [200, 200]),  class: "d-block rounded", height: 200, width: 200, id: "uploadAvatar", alt: "account-avatar") %>
+								<% else %>
+									<%= image_tag "img/avatars/1.png", alt: "account-avatar", class: "d-block rounded", height: 200, width: 200  %>
+								<% end %>
+							</div>
+							<% if @account.status == "pending" %>
+								<span class="badge bg-label-warning fs-3 mt-2 me-1"><%= @account.status %></span>
+							<% else %>
+								<span class="badge bg-label-primary fs-3 mt-2 me-1"><%= @account.status %></span>
+							<% end %>
+						</div>
+						<div class="col-lg-8">
+							<div class="d-flex">
+								<button type="button" class="btn btn-primary btn-lg me-3" data-bs-toggle="modal" data-bs-target="#modalCenter_account_<%= @account.id %>">
+									<i class='bx bxs-edit-alt' ></i> Edit
+								</button>
+								<%= form_with(url: admin_update_student_status_path(id: @account.id), html: { method: :post }, data: {turbo: false}) do |f| %>
+									<%= f.submit "Verify Account", class: "btn btn-outline-primary btn-lg", data: { confirm: "Are you sure you want to verify this account?" } %>
+								<% end %>
+							</div>
+						</div>
 					</div>
 				</div>
 				<hr class="my-0">
@@ -21,6 +40,9 @@
 						</div>
 						<div class="mb-3 col-md-6">
 							<strong>Last Name:</strong> <%= @account.last_name.present? ? @account.last_name : "NIL" %>
+						</div>
+						<div class="mb-3 col-md-6">
+							<strong>Other Name:</strong> <%= @account.other_name.present? ? @account.other_name : "NIL" %>
 						</div>
 						<div class="mb-3 col-md-6">
 							<strong>Email:</strong> <%= @account.email.present? ? @account.email : "NIL" %>
@@ -41,7 +63,7 @@
 							<strong>Zip Code:</strong> <%= @account.zip_code.present? ? @account.zip_code : "NIL" %>
 						</div>
 						<div class="mb-3 col-md-6">
-							<strong>Country:</strong> <%= @account.country.present? ? @account.country : "NIL" %>
+							<strong>Nationality:</strong> <%= @account.country.present? ? @account.country : "NIL" %>
 						</div>
 						<div class="mb-3 col-md-6">
 							<strong>Date of Birth:</strong> <%= @account.date_of_birth.present? ? @account.date_of_birth : "NIL" %>
@@ -49,8 +71,114 @@
 						<div class="mb-3 col-md-6">
 							<strong>Gender:</strong> <%= @account.gender.present? ? @account.gender : "NIL" %>
 						</div>
+						<div class="mb-3 col-md-6">
+							<strong>Tag ID:</strong> <%= @account.tag_id.present? ? @account.tag_id : "NIL" %>
+						</div>
+						<div class="mb-3 col-md-6">
+							<strong>Mat No:</strong> <%= @account.mat_no.present? ? @account.mat_no : "NIL" %>
+						</div>
+						<div class="mb-3 col-md-6">
+							<strong>Faculty:</strong> <%= @account.faculty.present? ? @account.faculty.name : "NIL" %>
+						</div>
+						<div class="mb-3 col-md-6">
+							<strong>Department:</strong> <%= @account.department.present? ? @account.department.name : "NIL" %>
+						</div>
 					</div>
 				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal fade" id="modalCenter_account_<%= @account.id %>" tabindex="-1" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Edit Account Details</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<%= form_with(model: @account, url: admin_update_student_path(id: @account.id), html: { method: :post }, data: {turbo: false}) do |f| %>
+					<div class="">
+						<div class="row" data-controller="faculty-department">
+							<div class="mb-3 col-md-6">
+								<%= f.label :first_name, class: "form-label" %> <span class="text-danger">*</span>
+								<%= f.text_field :first_name, class: "form-control", placeholder: "John" %>
+							</div>
+							<div class="mb-3 col-md-6">
+								<%= f.label :last_name, class: "form-label" %> <span class="text-danger">*</span>
+								<%= f.text_field :last_name, class: "form-control", placeholder: "Doe" %>
+							</div>
+							<div class="mb-3 col-md-6">
+								<%= f.label :other_name, class: "form-label" %> <span class="text-danger">*</span>
+								<%= f.text_field :other_name, class: "form-control", placeholder: "eg mike" %>
+							</div>
+							<div class="mb-3 col-md-6">
+								<%= f.label :email, class: "form-label" %> <span class="text-danger">*</span>
+								<%= f.email_field :email, autocomplete: "email", class: "form-control", readonly: true %>
+							</div>
+							<div class="mb-3 col-md-6">
+								<%= f.label :username, class: "form-label" %> <span class="text-danger">*</span>
+								<%= f.text_field :username, class: "form-control" %>
+							</div>
+							<div class="mb-3 col-md-6">
+								<%= f.label :mat_no, class: "form-label" %> <span class="text-danger">*</span>
+								<%= f.text_field :mat_no, class: "form-control", placeholder: "eg EEE/BSC/00000" %>
+							</div>
+							<div class="mb-3 col-md-6">
+								<%= f.label :tag_id, class: "form-label" %> <span class="text-danger">*</span>
+								<%= f.text_field :tag_id, class: "form-control", placeholder: "eg. 90988878" %>
+							</div>
+							<div class="mb-3 col-md-6">
+								<%= f.label :phone_number, class: "form-label" %>
+								<%= f.text_field :phone_number, class: "form-control", placeholder: "(+1) 202 555 0111" %>
+							</div>
+							<div class="mb-3 col-md-6">
+								<%= f.label :address, class: "form-label" %> <span class="text-danger">*</span>
+								<%= f.text_area :address, class: "form-control", placeholder: "123 Main Str" %>
+							</div>
+							<div class="mb-3 col-md-6">
+								<%= f.label :state, class: "form-label" %> <span class="text-danger">*</span>
+								<%= f.text_field :state, class: "form-control", placeholder: "California" %>
+							</div>
+							<div class="mb-3 col-md-6">
+								<%= f.label :zip_code, class: "form-label" %>
+								<%= f.text_field :zip_code, class: "form-control", placeholder: "231465", maxlength: 6 %>
+							</div>
+							<div class="mb-3 col-md-6">
+								<%= f.label :country, "Nationality", class: "form-label" %> <span class="text-danger">*</span>
+								<%= f.text_field :country, class: "form-control", placeholder: "eg. Nigerian" %>
+							</div>
+							<div class="mb-3 col-md-6">
+								<%= f.label :date_of_birth, class: "form-label" %>
+								<%= f.date_field :date_of_birth, class: "form-control" %>
+							</div>
+							<div class="mb-3 col-md-6">
+								<%= f.label :gender, class: "form-label" %> <span class="text-danger">*</span>
+								<%= f.select :gender, options_for_select([['Male', 'male'], ['Female', 'female'], 	['Rather not say', 'rather not say']], selected: @account.gender), { prompt: "Select gender" }, class: "form-control" %>
+							</div>
+							<div class="mb-3 col-md-6">
+								<%= f.label :faculty_id, "Faculty", class: "form-label" %> <span class="text-danger">*</span>
+								<%= f.collection_select :faculty_id, Faculty.all, :id, :name,
+									{ prompt: "Select Faculty" },
+									{ class: "form-select",
+										selected: @account.faculty_id } %>
+							</div>
+							<div class="mb-3 col-md-6">
+								<%= f.label :department_id, "Department", class: "form-label" %> <span class="text-danger">*</span>
+								<%= f.collection_select :department_id,
+									@account.faculty ? @account.faculty.departments : [],
+									:id, :name,
+									{ prompt: "Select Department" },
+									{ class: "form-select",
+										data: { "faculty-department-target": "department" },
+										selected: @account.department_id } %>
+							</div>
+						</div>
+						<div class="mt-2">
+							<%= f.submit "Save changes", class: 'btn btn-primary me-2' %>
+						</div>
+					</div>
+				<% end %>
 			</div>
 		</div>
 	</div>

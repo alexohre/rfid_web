@@ -36,11 +36,41 @@ class Admin::DashboardController < AdminController
     @title = "#{@account.first_name.presence || @account.username}'s profile"
   end
 
+  def update_student
+    @account = Account.find(params[:id])
+
+    if @account.update(account_params)
+      redirect_to admin_path(@account), notice: "Student Details Updated!"
+    else
+      redirect_to admin_path(@account), alert: "Oops, Something went wrong!"
+    end
+  end
+
+  def update_student_status
+    @account = Account.find(params[:id])
+    
+    if @account.update(status: "verified")
+      redirect_to admin_path(@account), notice: "Account successfully verified!"
+    else
+      redirect_to admin_path(@account), alert: "Failed to verify account. Please try again."
+    end
+  end
+
   def destroy
     @account = Account.find(params[:id])
     if @account.present?
       @account.destroy
       redirect_to admin_users_path, notice: "Account Deleted successfully!"
     end
+  end
+
+  private
+
+  def account_params
+    params.require(:account).permit(
+      :first_name, :last_name, :other_name, :email, :username, :mat_no, :tag_id, :phone_number,
+      :address, :state, :zip_code, :country, :date_of_birth, :gender, :faculty_id,
+      :department_id
+    )
   end
 end

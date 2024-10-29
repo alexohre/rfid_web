@@ -13,7 +13,7 @@ class Account < ApplicationRecord
   has_many :exam_registrations
   has_many :exams, through: :exam_registrations
   
-  enum status: { pending: 0, active: 1 }
+  enum status: { pending: 0, verified: 1 }
 
   has_one_attached :avatar, dependent: :destroy
 
