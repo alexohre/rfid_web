@@ -1,0 +1,62 @@
+<%# app/views/account/exams/register_exam.html.erb %>
+<div class="container-xxl flex-grow-1 container-p-y">
+	<div class="row">
+		<!-- Exam Registration Form -->
+		<div class="col-lg-6 mb-4 order-0">
+			<div class="card" data-controller="semester">
+				<div class="card-body">
+					<h5 class="card-title text-primary">Register Your Exam</h5>
+					<%= form_with url: register_exam_account_exams_path, method: :get, local: true do %>
+						<div class="mb-3">
+							<label for="semesterSelect" class="form-label">Semester</label>
+							<%= select_tag :semester_id, options_from_collection_for_select(@semesters, :id, :name, params[:semester_id]),
+                   prompt: "-- Select --", class: "form-select", id: "semesterSelect" %>
+						</div>
+						<div class="mb-4">
+							<label for="courseSearch" class="form-label">Search Courses</label>
+							<div class="input-group">
+								<%= text_field_tag :course_code, params[:course_code], placeholder: "Course Code", class: "form-control", id: "courseSearch" %>
+								<button class="btn btn-outline-primary" type="submit">Search</button>
+							</div>
+						</div>
+					<% end %>
+					<div id="courses_list">
+						<% if @courses.any? %>
+							<% @courses.each do |course| %>
+								<div class="d-flex justify-content-between align-items-center">
+									<div>
+										<h6 class="mb-0 fw-bold"><%= course.course_code %></h6>
+										<small class="text-dark d-block mb-1"><%= course.course_title %></small>
+									</div>
+									<button class="btn btn-sm btn-primary" type="button">Add</button>
+									<%#= check_box_tag "course_ids[]", course.id %>
+								</div>
+								<hr>
+							<% end %>
+						<% else %>
+							<p>No course found </p>
+						<% end %>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Selected Courses -->
+		<div class="col-lg-6 col-md-4 order-1">
+			<div class="card">
+				<div class="card-body">
+					<h5 class="card-title text-primary">Selected Courses</h5>
+					<% @selected_courses.each do |course| %>
+						<div class="d-flex justify-content-between align-items-center">
+							<div>
+								<h6 class="mb-0 fw-bold"><%= course.course_code %></h6>
+								<small class="text-dark d-block mb-1"><%= course.course_title %></small>
+							</div>
+							<button class="btn btn-sm btn-danger" type="button">Remove</button>
+						</div>
+						<hr>
+					<% end %>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

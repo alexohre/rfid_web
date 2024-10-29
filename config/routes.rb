@@ -10,8 +10,17 @@ Rails.application.routes.draw do
     get 'settings/change_password', to: 'setting#change_password'
     get 'settings/profile', to: 'setting#profile'
 
-    resources :urls, param: :short_code
+    get "dashboard/register_exam", to: "exams#register_exam"
+    get "dashboard/my_exams", to: "exams#my_exams"
 
+    resources :exams, only: [] do
+      collection do
+        get :register_exam
+        post :register_exam
+        get :my_exams
+        get :search_courses
+      end
+    end
 
   end
 

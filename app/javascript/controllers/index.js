@@ -21,3 +21,6 @@ application.register("link-copy-mobile", LinkCopyMobileController)
 
 import PreviewsController from "./previews_controller"
 application.register("previews", PreviewsController)
+
+import SemesterController from "./semester_controller"
+application.register("semester", SemesterController)
