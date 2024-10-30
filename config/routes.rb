@@ -26,13 +26,6 @@ Rails.application.routes.draw do
 
 
   namespace :admin do
-    resources :payment_methods, only: [:create, :destroy]
-
-    resources :currency_pairs, only: [:create, :destroy] do
-      collection do
-        post :import_csv
-      end
-    end
 
     resources :faculties do
       get 'departments', on: :member
@@ -54,6 +47,7 @@ Rails.application.routes.draw do
         get :assign_courses   # Route for the assignment form
         patch :update_courses # Route for submitting the form
       end
+      resources :courses, only: [:destroy]
     end
     post 'masquerade_as_account', to: 'dashboard#masquerade_as_account'
     # delete account
