@@ -1,0 +1,17 @@
+<%# app/views/account/exams/_course_list.html.erb %>
+<div id="courses_list">
+	<% if courses.any? %>
+		<% courses.each do |course| %>
+			<div class="d-flex justify-content-between align-items-center">
+				<div>
+					<h6 class="mb-0 fw-bold"><%= course.course_code %></h6>
+					<small class="text-dark d-block mb-1"><%= course.course_title %></small>
+				</div>
+				<%= check_box_tag "course_ids[]", course.id %>
+			</div>
+			<hr>
+		<% end %>
+	<% else %>
+		<p>No courses found </p>
+	<% end %>
+</div>

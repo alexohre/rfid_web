@@ -2,7 +2,6 @@ Rails.application.routes.draw do
   # devise_for :lecturers
   
   namespace :account do
-    resource :subscription, only: [ :update]
     get 'dashboard', to: 'dashboard#home'
     get 'dashboard/notifications', to: 'dashboard#notifications'
     post 'revert_masquerade', to: "dashboard#revert_masquerade"
@@ -12,6 +11,30 @@ Rails.application.routes.draw do
 
     get "dashboard/register_exam", to: "exams#register_exam", as: :dashboard_register_exam
     get "dashboard/my_exams", to: "exams#my_exams", as: :dashboard_my_exams
+
+    # Exams resources
+    resources :exams, only: [] do
+      collection do
+        match :register_exam, via: [:get, :post], defaults: { format: 'html' }
+        get :my_exams
+        get :search_courses
+      end
+    end
+
+  end
+
+  namespace :lecturer do
+    get 'dashboard', to: 'dashboard#home'
+    get 'dashboard/notifications', to: 'dashboard#notifications'
+    post 'revert_masquerade', to: "dashboard#revert_masquerade"
+
+    get 'dashboard/students', to: 'dashboard#students'
+    # setting
+    get 'settings/change_password', to: 'setting#change_password'
+    get 'settings/profile', to: 'setting#profile'
+
+    get "dashboard/register_exam", to: "exams#register_exam", as: :dashboard_register_exam
+    get "dashboard/my_exams", to: "dashboard#my_exams"
 
     # Exams resources
     resources :exams, only: [] do
@@ -96,10 +119,11 @@ Rails.application.routes.draw do
   }, only: [:sessions, :registrations]
 
   devise_for :lecturers, controllers:{
-    sessions: 'lecturers/sessions'
+    sessions: 'lecturers/sessions',
+    registrations: 'lecturers/registrations'
   }, path: 'lecturers', path_names: { 
     sign_in: 'login', sign_out: 'logout', sign_up: 'register'
-  }, only: [:sessions]
+}, only: [:sessions, :registration]
 
   root 'pages#home'
 

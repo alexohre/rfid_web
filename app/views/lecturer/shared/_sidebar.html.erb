@@ -1,0 +1,70 @@
+<aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+	<div class="app-brand demo">
+		<a href="<%= lecturer_dashboard_path %>" data-turbo="false" class="app-brand-link" >
+			<span class="app-brand-logo demo">
+				<%= image_tag "fun_logo.png", width: "50", alt: "logo" %>
+			</span>
+			<span class="app-brand-text demo menu-text fw-bolder ms-2 text-capitalize">EEE Funai</span>
+		</a>
+		<a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
+			<i class="bx bx-chevron-left bx-sm align-middle"></i>
+		</a>
+	</div>
+	<div class="menu-inner-shadow"></div>
+	<ul class="menu-inner py-1">
+		<!-- Dashboard -->
+		<li class="menu-item <%= 'active' if request.path == lecturer_dashboard_path %>">
+			<a href="<%= lecturer_dashboard_path %>" data-turbo="false" class="menu-link" >
+				<i class="menu-icon tf-icons bx bx-home-circle"></i>
+				<div data-i18n="Analytics">Dashboard</div>
+			</a>
+		</li>
+		<li class="menu-header small">
+			<span class="menu-header-text">Pages</span>
+		</li>
+		<li class="menu-item <%= 'active' if request.path == lecturer_dashboard_students_path %>">
+			<a href="<%= lecturer_dashboard_students_path %>" data-turbo="false" class="menu-link" >
+				<i class="menu-icon tf-icons bx bx-group"></i>
+				<div data-i18n="Analytics">Students</div>
+			</a>
+		</li>
+		<!-- Extended components -->
+		<li class="menu-item <%= 'active' if request.path == lecturer_dashboard_my_exams_path %>">
+			<a href="<%= lecturer_dashboard_my_exams_path %>" data-turbo="false" class="menu-link" >
+				<i class="menu-icon tf-icons bx bx-book-content"></i>
+				<div data-i18n="Analytics">Exams</div>
+			</a>
+		</li>
+		<!-- Components -->
+		<li class="menu-item <%= 'active' if request.path == lecturer_dashboard_notifications_path %>">
+			<a href="<%= lecturer_dashboard_notifications_path %>" data-turbo="false" class="menu-link" >
+				<i class="menu-icon tf-icons bx bx-bell"></i>
+				<div data-i18n="Analytics">Notifications</div>
+			</a>
+		</li>
+		<!-- User interface -->
+		<li class="menu-item <%= 'active open' if request.path == edit_lecturer_registration_path || request.path == lecturer_settings_change_password_path || request.path == lecturer_settings_profile_path %>">
+			<a href="javascript:void(0)" class="menu-link menu-toggle">
+				<i class="menu-icon tf-icons bx bx-cog"></i>
+				<div data-i18n="User interface">Settings</div>
+			</a>
+			<ul class="menu-sub">
+				<li class="menu-item <%= 'active' if request.path == lecturer_settings_profile_path %>">
+					<a href="<%= lecturer_settings_profile_path %>" data-turbo="false" class="menu-link" >
+						<div data-i18n="Accordion">Profile</div>
+					</a>
+				</li>
+				<li class="menu-item <%= 'active' if request.path == edit_lecturer_registration_path %>">
+					<a href="<%= edit_lecturer_registration_path %>" data-turbo="false" class="menu-link" >
+						<div data-i18n="Accordion">Edit Profile</div>
+					</a>
+				</li>
+				<li class="menu-item <%= 'active' if request.path == lecturer_settings_change_password_path %>">
+					<a href="<%= lecturer_settings_change_password_path %>" data-turbo="false" class="menu-link" >
+						<div data-i18n="Alerts">Change Password</div>
+					</a>
+				</li>
+			</ul>
+		</li>
+	</ul>
+</aside>
