@@ -1,30 +1,68 @@
 <div class="container-xxl flex-grow-1 container-p-y">
 	<div class="row">
-		<div class="col-lg-8 mx-auto mb-4 order-0">
-			<div class="card">
-				<div class="d-flex align-items-end row">
-					<div class="card-body">
-						<h1 class="text-center">No Exam Registered Yet.</h1>
-						<p class="text-center fs-4 text-primary">Registered Exams will appear here</p>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="col-lg-8 mx-auto mb-4 order-0">
-			<div class="card">
-				<div class="d-flex align-items-end row">
-					<div class="card-body">
-						<h2>My Exams</h2>
-						<hr>
-						<div class="d-flex justify-content-between align-items-center">
-							<div>
-								<h6 class="mb-0 fw-bold">EEE 301</h6>
-								<small class="text-dark d-block mb-1">Introduction to Electronics</small>
-							</div>
-							<strong>[7] course(s)</strong>
+		<% if !@registered_courses.present? %>
+			<div class="col-lg-8 mx-auto mb-4 order-0">
+				<div class="card">
+					<div class="d-flex align-items-end row">
+						<div class="card-body">
+							<h1 class="text-center">No Exam Registered Yet.</h1>
+							<p class="text-center fs-4 text-primary">Registered Exams will appear here</p>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
+		<% else %>
+			<div class="container-xxl flex-grow-1 container-p-y">
+				<div class="row">
+					<div class="col-lg-8 mx-auto mb-4 order-0">
+						<div class="card">
+							<div class="d-flex align-items-end row">
+								<div class="card-body">
+									<h2>My Registered Courses</h2>
+									<hr>
+									<% @registered_courses.each do |semester, courses| %>
+										<!-- Semester Registration Summary -->
+										<div class="d-flex justify-content-between align-items-center mb-3">
+											<button class="btn btn-link p-0 text-start" data-bs-toggle="modal" data-bs-target="#semesterCoursesModal-<%= semester&.id %>">
+												<div>
+													<h6 class="mb-0 fw-bold text-primary">200L</h6>
+													<small class="text-primary d-block mb-1"><%= semester.name %> Course Registration</small>
+												</div>
+											</button>
+											<strong>
+												[<%= courses.count %>] course(s)
+											</strong>
+										</div>
+										<!-- Modal for Course List -->
+										<div class="modal fade" id="semesterCoursesModal-<%= semester&.id %>" tabindex="-1" aria-labelledby="courseListModalLabel" aria-hidden="true">
+											<div class="modal-dialog modal-dialog-centered modal-lg">
+												<div class="modal-content">
+													<div class="modal-header">
+														<h5 class="modal-title" id="courseListModalLabel"><%= semester.name %> Semester Courses</h5>
+														<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+													</div>
+													<div class="modal-body">
+														<% if courses.any? %>
+															<ul class="list-group">
+																<% courses.each do |enrollment| %>
+																	<li class="list-group-item d-flex justify-content-between align-items-center">
+																		<span><%= enrollment.course.course_code %> - <%= enrollment.course.course_title %></span>
+																	</li>
+																<% end %>
+															</ul>
+														<% else %>
+															<p>No courses registered for this semester.</p>
+														<% end %>
+													</div>
+												</div>
+											</div>
+										</div>
+									<% end %>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		<% end %>
 	</div>

@@ -10,8 +10,8 @@ class Account < ApplicationRecord
   belongs_to :faculty, optional: true
   belongs_to :department, optional: true
 
-  has_many :exam_registrations
-  has_many :exams, through: :exam_registrations
+  has_many :enrollments
+  has_many :courses, through: :enrollments
   
   enum status: { pending: 0, verified: 1 }
 

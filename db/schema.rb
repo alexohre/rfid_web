@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_10_28_202254) do
+ActiveRecord::Schema[7.0].define(version: 2024_11_13_142906) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -119,29 +119,15 @@ ActiveRecord::Schema[7.0].define(version: 2024_10_28_202254) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "exam_courses", force: :cascade do |t|
-    t.bigint "exam_id", null: false
-    t.bigint "course_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["course_id"], name: "index_exam_courses_on_course_id"
-    t.index ["exam_id"], name: "index_exam_courses_on_exam_id"
-  end
-
-  create_table "exam_registrations", force: :cascade do |t|
+  create_table "enrollments", force: :cascade do |t|
     t.bigint "account_id", null: false
-    t.bigint "exam_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["account_id"], name: "index_exam_registrations_on_account_id"
-    t.index ["exam_id"], name: "index_exam_registrations_on_exam_id"
-  end
-
-  create_table "exams", force: :cascade do |t|
+    t.bigint "course_id", null: false
     t.bigint "semester_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["semester_id"], name: "index_exams_on_semester_id"
+    t.index ["account_id"], name: "index_enrollments_on_account_id"
+    t.index ["course_id"], name: "index_enrollments_on_course_id"
+    t.index ["semester_id"], name: "index_enrollments_on_semester_id"
   end
 
   create_table "faculties", force: :cascade do |t|
@@ -211,11 +197,9 @@ ActiveRecord::Schema[7.0].define(version: 2024_10_28_202254) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "courses", "departments"
   add_foreign_key "departments", "faculties"
-  add_foreign_key "exam_courses", "courses"
-  add_foreign_key "exam_courses", "exams"
-  add_foreign_key "exam_registrations", "accounts"
-  add_foreign_key "exam_registrations", "exams"
-  add_foreign_key "exams", "semesters"
+  add_foreign_key "enrollments", "accounts"
+  add_foreign_key "enrollments", "courses"
+  add_foreign_key "enrollments", "semesters"
   add_foreign_key "lecturer_courses", "courses"
   add_foreign_key "lecturer_courses", "lecturers"
 end

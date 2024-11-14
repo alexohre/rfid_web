@@ -53,7 +53,10 @@ class Admin::SchoolConfigController < AdminController
     if @course.save
       redirect_to admin_school_config_path, notice: 'Course created successfully.'
     else
-      redirect_to admin_school_config_path, alert: 'Error creating course.'
+      error_messages = @course.errors.full_messages.join(", ")
+      redirect_to admin_school_config_path, alert: "Error creating course: #{error_messages}"
+
+      # redirect_to admin_school_config_path, alert: 'Error creating course.'
     end
   end
 
