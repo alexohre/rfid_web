@@ -88,6 +88,10 @@ Rails.application.routes.draw do
     patch 'school_config/update_department/:id', to: 'school_config#update_department', as: 'update_department'
     patch 'school_config/update_courses/:id', to: 'school_config#update_courses', as: 'update_courses'
 
+    # Exams
+    get "exams", to: "exams#index"
+    post "exams", to: "exams#create"
+
     # settings
     get 'settings/account', to: 'setting#account'
     get 'settings/password', to: 'setting#admin_password'

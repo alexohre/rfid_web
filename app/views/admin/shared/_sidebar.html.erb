@@ -71,6 +71,12 @@
 						<div data-i18n="Basic">School Config</div>
 					</a>
 				</li>
+				<li class="menu-item <%= 'active' if request.path == admin_exams_path  %>">
+					<a href="<%= admin_exams_path %>" class="menu-link" data-turbo="false">
+						<i class="menu-icon tf-icons bx bxs-book-open"></i>
+						<div data-i18n="Basic">Exams</div>
+					</a>
+				</li>
 				<li class="menu-item <%= 'active' if request.path == admin_emails_path || request.path == admin_email_new_path %>">
 					<a href="<%= admin_emails_path %>" class="menu-link" data-turbo="false">
 						<i class="menu-icon tf-icons bx bx-envelope"></i>

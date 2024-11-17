@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_11_13_142906) do
+ActiveRecord::Schema[7.0].define(version: 2024_11_14_141624) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -130,6 +130,18 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_13_142906) do
     t.index ["semester_id"], name: "index_enrollments_on_semester_id"
   end
 
+  create_table "exams", force: :cascade do |t|
+    t.date "date"
+    t.time "start_time"
+    t.time "end_time"
+    t.bigint "course_id", null: false
+    t.bigint "semester_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["course_id"], name: "index_exams_on_course_id"
+    t.index ["semester_id"], name: "index_exams_on_semester_id"
+  end
+
   create_table "faculties", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -200,6 +212,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_13_142906) do
   add_foreign_key "enrollments", "accounts"
   add_foreign_key "enrollments", "courses"
   add_foreign_key "enrollments", "semesters"
+  add_foreign_key "exams", "courses"
+  add_foreign_key "exams", "semesters"
   add_foreign_key "lecturer_courses", "courses"
   add_foreign_key "lecturer_courses", "lecturers"
 end

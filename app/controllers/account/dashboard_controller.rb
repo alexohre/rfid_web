@@ -1,6 +1,12 @@
 class Account::DashboardController < AccountController
   def home
     @title = "Account Dashboard"
+   
+    @exams = Exam.includes(:course).joins(course: :enrollments)
+                 .where(enrollments: { account_id: current_account.id }) # Link to the current account
+                #  .where.not(courses: { exams: nil }) # Exclude courses without exams
+                 .where("exams.date >= ?", Date.today).distinct # Filter only upcoming exams
+                 .order(:date, :start_time)#.limit(2) # Order by date and time
   end
 
   def notifications

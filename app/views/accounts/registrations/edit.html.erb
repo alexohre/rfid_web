@@ -13,14 +13,16 @@
 							<% else %>
 								<%=  image_tag "logo.png", data: {previews_target: "preview"}, alt: "logo", class: "d-block rounded", height: 100, width: 100, id: "uploadedAvatar" %>
 							<% end %>
-							<div class="button-wrapper">
-								<label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0">
-									<span class="d-none d-sm-block">Upload Logo</span>
-									<i class="bx bx-upload d-block d-sm-none"></i>
-									<%= f.file_field :avatar, id: "upload", style: "display: none", data: { previews_target: "input", action: "change->previews#preview" } %>
-								</label>
-								<p class="text-muted mb-0">Allowed JPG or PNG. Max size of 800K</p>
-							</div>
+							<% if resource.status == "pending" %>
+								<div class="button-wrapper">
+									<label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0">
+										<span class="d-none d-sm-block">Upload Logo</span>
+										<i class="bx bx-upload d-block d-sm-none"></i>
+										<%= f.file_field :avatar, id: "upload", style: "display: none", data: { previews_target: "input", action: "change->previews#preview" } %>
+									</label>
+									<p class="text-muted mb-0">Allowed JPG or PNG. Max size of 800K</p>
+								</div>
+							<% end %>
 						</div>
 					</div>
 					<hr class="my-0">
@@ -176,9 +178,11 @@
 								</div>
 							</div>
 						<% end %>
-						<div class="mt-2">
-							<%= f.submit "Save changes", class: 'btn btn-primary me-2' %>
-						</div>
+						<% if resource.status == "pending" %>
+							<div class="mt-2">
+								<%= f.submit "Save changes", class: 'btn btn-primary me-2' %>
+							</div>
+						<% end %>
 					</div>
 				<% end %>
 				<!-- /Account -->

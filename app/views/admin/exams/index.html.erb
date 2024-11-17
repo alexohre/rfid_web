@@ -1,0 +1,82 @@
+<div class="container-xxl flex-grow-1 container-p-y">
+	<h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Admin/</span> School Exams</h4>
+	<!-- Basic Layout -->
+	<div class="row">
+		<div class="col-xl">
+			<div class="card mb-4">
+				<div class="card-header d-flex justify-content-between align-items-center">
+					<h5 class="mb-0">Create Exams</h5>
+				</div>
+				<%= form_with model: [:admin, @exam], url: admin_exams_path, method: :post, local: true do |f| %>
+					<div class="card-body">
+						<!-- Select Semester -->
+						<div class="mb-3">
+							<%= f.label :semester_id, "Select Semester", class: "form-label" %>
+							<%= f.select :semester_id, 
+                   options_from_collection_for_select(@semesters, :id, :name),
+                   { prompt: "Select Semester" },
+                   class: "form-select", id: "semesterSelect" %>
+						</div>
+						<!-- Select Course -->
+						<div class="mb-3">
+							<%= f.label :course_id, "Select Course", class: "form-label" %>
+							<%= f.select :course_id, options_from_collection_for_select(@courses, :id, ->(course) { "#{course.course_code} - #{course.course_title}" }), { prompt: "Select Course" }, class: "form-select", id: "courseSelect" %>
+						</div>
+						<!-- Exam Date -->
+						<div class="mb-3">
+							<%= f.label :date, "Exam Date", class: "form-label" %>
+							<%= f.date_field :date, class: "form-control", id: "examDate", required: true %>
+						</div>
+						<!-- Exam Time -->
+						<div class="row mb-3">
+							<div class="col">
+								<%= f.label :start_time, "Start Time", class: "form-label" %>
+								<%= f.time_field :start_time, class: "form-control", id: "startTime", required: true %>
+							</div>
+							<div class="col">
+								<%= f.label :end_time, "End Time", class: "form-label" %>
+								<%= f.time_field :end_time, class: "form-control", id: "endTime", required: true %>
+							</div>
+						</div>
+						<!-- Submit Button -->
+						<div class="d-flex justify-content-end">
+							<%= f.submit "Create Exam", class: "btn btn-primary" %>
+						</div>
+					</div>
+				<% end %>
+			</div>
+		</div>
+		<div class="col-xl">
+			<div class="card mb-4">
+				<div class="card-header d-flex justify-content-between align-items-center">
+					<h5 class="mb-0">Upcoming Exams</h5>
+				</div>
+				<div class="card-body">
+					<ul class="p-0 m-0">
+						<% if @exams.present? %>
+							<% @exams.each do |exam| %>
+								<li class="d-flex mb-4 pb-1">
+									<!-- Date Box -->
+									<div class="card-boxi flex-shrink-0 me-3 text-center" style="width: 60px;">
+										<h3 class="mb-0"><%= exam.date.strftime('%d') %></h3>
+										<small class="text-muted fw-bold"><%= exam.date.strftime('%b').upcase %></small>
+									</div>
+									<!-- Exam Details -->
+									<div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+										<div class="me-2">
+											<h6 class="mb-0 fw-bold"><%= exam.course.course_code %> </h6>
+											<small class="text-dark d-block mb-1"><%= truncate(exam.course.course_title, length: 40) %></small>
+											<small class="text-muted"><%= exam.start_time.strftime('%I:%M%P') %> - <%= exam.end_time.strftime('%I:%M%P') %></small>
+										</div>
+									</div>
+								</li>
+							<% end %>
+						<% else %>
+							No Exam Yet
+						<% end %>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

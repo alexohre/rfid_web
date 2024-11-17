@@ -3,6 +3,8 @@ class Course < ApplicationRecord
   # belongs_to :semester
   belongs_to :semester
 
+  has_many :exams, dependent: :destroy
+
   has_many :lecturer_courses, dependent: :destroy
   has_many :lecturers, through: :lecturer_courses
 
