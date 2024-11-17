@@ -1,5 +1,5 @@
 # app/controllers/account/exams_controller.rb
-class Account::ExamsController < AccountController
+class Lecturer::ExamsController < LecturerController
   before_action :set_semesters, only: [:register_exam]
 
   def register_exam
